@@ -1,5 +1,5 @@
 {
-  "name": "element-ui-admin",
+  "name": "element-components",
   "version": "0.0.1",
   "main": "./src/components/tableTemplate/index.js",
   "scripts": {
@@ -7,7 +7,6 @@
     "build": "vue-cli-service build --target lib --name tableTemplate ./src/components/index.js --dest dist"
   },
   "dependencies": {
-    "core-js": "^2.6.5",
     "element-ui": "^2.12.0",
     "vue": "^2.6.10"
   },
