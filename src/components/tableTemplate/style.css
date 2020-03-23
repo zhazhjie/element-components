@@ -1,0 +1,127 @@
+.group-item-title {
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  color: #c1ccd9;
+  background: #fff;
+}
+
+.group-item-title::before {
+  width: 20px;
+  content: '';
+  height: 1px;
+  border-bottom: 1px dashed #c1ccd9;
+  margin-right: 10px;
+}
+
+.group-item-title::after {
+  flex: 1;
+  content: '';
+  height: 1px;
+  border-bottom: 1px dashed rgb(191, 203, 217);
+  margin-left: 10px;
+}
+
+.el-drawer__body {
+  overflow: auto;
+  padding: 10px 20px 50px;
+}
+
+.el-drawer-footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 20px;
+  height: 50px;
+  z-index: 2;
+}
+
+.table-template .content {
+  display: flex;
+}
+
+.table-template .table {
+  flex: 1;
+}
+
+.search-bar-form.el-form .el-form-item {
+  display: inline-flex;
+  width: 250px;
+}
+
+.search-bar-form .el-form-item__content {
+  flex: 1;
+}
+
+.search-bar-form .el-form-item .el-input,
+.search-bar-form .el-form-item .el-select,
+.search-bar-form .el-form-item .el-cascader,
+.search-bar-form .el-form-item .el-input__inner {
+  width: 100%;
+}
+
+.search-bar-wrapper {
+  position: relative;
+  margin: 10px auto 15px;
+}
+
+.search-bar-form.el-form {
+  background-color: #f9f9f9;
+  padding: 18px 0 0;
+  border: 1px solid #ebeef5;
+  transition: all 0.3s;
+  overflow: hidden;
+}
+
+.search-bar-form.slide-down {
+  height: 300px;
+  transition: all 0.2s;
+}
+
+.search-bar-wrapper .slide-btn {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) rotate(90deg);
+  cursor: pointer;
+  font-size: 18px;
+  color: #ccc;
+  z-index: 5;
+  transition: all 0.2s;
+}
+
+.search-bar-wrapper .slide-btn.down {
+  transform: translateX(-50%) rotate(-90deg);
+  transition: all 0.3s;
+}
+
+.search-bar-wrapper .slide-btn:hover {
+  color: #999;
+}
+
+.table-template .edit-box .clickable{
+  display: inline-block;
+  cursor: pointer;
+  min-width: 30px;
+  min-height: 20px;
+}
+
+.table-template .edit-box input{
+  text-align: center;
+}
+
+.table-template .el-table__header th{
+  background: #f9f9f9;
+}
+
+.table-template .el-table__column-filter-trigger {
+   line-height: normal;
+}
