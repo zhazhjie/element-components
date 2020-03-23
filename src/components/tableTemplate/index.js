@@ -22,7 +22,7 @@ function toString(value) {
 /**
  * 简单拷贝
  * @param obj
- * @returns {any}
+ * @returns {*}
  */
 function copy(obj) {
   return JSON.parse(JSON.stringify(obj));
@@ -201,18 +201,18 @@ export default {
     },
     handleEvent(row, dialogTitle, handleType) {
       // this.emitEvent(event, row);
+      this.handleType = handleType;
+      this.dialogTitle = dialogTitle;
+      if (handleType === 0) {
+        let curRow = {};
+        this.config.columns.forEach(column => {
+          curRow[column.field] = column.value;
+        });
+        this.curRow = curRow;
+      } else {
+        this.curRow = copy(row);
+      }
       let done = () => {
-        this.handleType = handleType;
-        this.dialogTitle = dialogTitle;
-        if (handleType === 0) {
-          let curRow = {};
-          this.config.columns.forEach(column => {
-            curRow[column.field] = column.value;
-          });
-          this.curRow = curRow;
-        } else {
-          this.curRow = copy(row);
-        }
         this.dialogVisible = true;
       };
       if (this.config.beforeOpen) {
