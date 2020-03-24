@@ -122,6 +122,7 @@ export default {
     }
   },
   mounted() {
+    this.$parent.$table = this;
     this.getVisibleNum();
   },
   methods: {
@@ -216,7 +217,7 @@ export default {
         this.dialogVisible = true;
       };
       if (this.config.beforeOpen) {
-        this.config.beforeOpen(this.curRow, done);
+        this.config.beforeOpen(this.handleType ? this.curRow : null, done);
       } else {
         done();
       }
@@ -330,7 +331,7 @@ export default {
       if (render) {
         return render(row, disabled);
       } else if (scopedSlots) {
-        return scopedSlots(row);
+        return scopedSlots({row, disabled});
       } else if (customRender) {
         return customRender(row);
       } else {
