@@ -1,7 +1,7 @@
 {
   "name": "element-components",
   "version": "1.0.0",
-  "main": "./src/components/tableTemplate/index.js",
+  "main": "./src/components/index.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --target lib --name tableTemplate ./src/components/index.js --dest dist"
