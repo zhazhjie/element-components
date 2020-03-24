@@ -89,17 +89,17 @@
         return new Promise((resolve, reject) => {
           let xhr = new XMLHttpRequest();
           let {headers, action} = this.config;
-          if (headers) {
-            for (let key in headers) {
-              xhr.setRequestHeader(key, headers[key]);
-            }
-          }
           xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
               resolve(JSON.parse(xhr.response));
             }
           };
           xhr.open('post', action);
+          if (headers) {
+            for (let key in headers) {
+              xhr.setRequestHeader(key, headers[key]);
+            }
+          }
           xhr.send(data);
         });
       },
