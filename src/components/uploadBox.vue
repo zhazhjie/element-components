@@ -11,7 +11,6 @@
 </template>
 
 <script>
-  import {getStore} from "../utils/util";
 
   export default {
     name: "uploadBox",
@@ -23,9 +22,9 @@
     },
     data() {
       return {
-        uploadUrl: process.env.VUE_APP_REMOTE_URL + process.env.VUE_APP_API_ROOT + "/public/upload",
+        uploadUrl: "/public/upload",
         headers: {
-          token: getStore('token', 'local')
+          token: ""
         }
       }
     },

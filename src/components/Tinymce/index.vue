@@ -9,7 +9,6 @@
   import plugins from './plugins'
   import toolbar from './toolbar'
   import UploadImg from "./uploadImg";
-  import {upload} from "../../api/base";
 
   export default {
     name: 'tinymce',

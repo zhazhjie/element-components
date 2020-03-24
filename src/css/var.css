@@ -1,0 +1,43 @@
+/**
+ * @author: zhazhjie
+ * @email: zhazhjie@vip.qq.com
+ * @date: 2018-06-11 11:26:18
+ * @version: 1.0
+ */
+:root {
+  --primary: #148eec;
+  --blue: #4689f2;
+  --bg: #f1f1f1;
+  --lightGrey: #fcfcfc;
+  --red: #ed5848;
+  --green: #48b132;
+  --orange: #ffa535;
+  --black: #3b3b3b;
+  --yellow: #ffcf0d;
+  --deepgray:#767676;
+  --gray: #acacac;
+  --hover: #F4F5FF;
+  --active: #F1F6F7;
+  --border: #bdbdbd;
+  --shadow: rgba(0, 0, 0, .2);
+  --box: {
+    background-color: #fff;
+    border-radius: 0.05rem;
+    padding: 0.15rem;
+    border: 1px solid #dcdfe6;
+  };
+  --middle: {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  };
+  --flex-center: {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  };
+  --padding:{
+    padding-top: 0.45rem;
+  }
+}

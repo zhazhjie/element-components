@@ -1,0 +1,45 @@
+/**
+公共组件小图标
+ */
+@font-face {
+  font-family: 'iconfont-common';  /* project id 1310244 */
+  src: url('//at.alicdn.com/t/font_1310244_uyvgdbt207p.eot');
+  src: url('//at.alicdn.com/t/font_1310244_uyvgdbt207p.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1310244_uyvgdbt207p.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1310244_uyvgdbt207p.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1310244_uyvgdbt207p.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1310244_uyvgdbt207p.svg#iconfont') format('svg');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  /*font-size: 100px;*/
+}
+
+body {
+  font-size: 0.14rem;
+}
+
+li {
+  list-style: none
+}
+
+i, em {
+  font-style: normal;
+}
+
+.icon-common {
+    font-family: 'iconfont-common';
+}
+
+
+.clearfix::after{
+  content: "";
+  display: block;
+  clear: both;
+}

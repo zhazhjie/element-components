@@ -7,27 +7,23 @@
 </template>
 
 <script>
-export default {
-  name: 'App',
-  computed:{
+  export default {
+    name: 'App',
+    computed: {},
+    components: {},
+    methods: {},
+    mounted() {
 
-  },
-  components:{
-
-  },
-  methods:{
-
-  },
-  mounted(){
-
+    }
   }
-}
 </script>
 
 <style>
-#app{
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
+  @import url("./css/global.css");
+
+  #app {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
 </style>

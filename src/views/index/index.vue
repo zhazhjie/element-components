@@ -7,12 +7,23 @@
 
 <template>
   <section id="index">
-
+    <el-container class='container'>
+      <nav-bar/>
+      <el-container class='right-container'>
+        <head-bar />
+        <el-main id='el-main'>
+          <el-router-view/>
+        </el-main>
+      </el-container>
+    </el-container>
   </section>
 </template>
 
 
 <script>
+import headBar from './headBar'
+import navBar from './navBar'
+import elRouterView from '../routerView'
 export default {
   data() {
     return {
@@ -20,7 +31,9 @@ export default {
     }
   },
   components: {
-
+    headBar,
+    navBar,
+    elRouterView
   },
   methods: {
 
@@ -35,5 +48,16 @@ export default {
 </script>
 
 <style scoped>
-
+.container{
+	height: 100vh;
+  background: #fff;
+}
+#el-main{
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.right-container{
+  flex-direction: column;
+}
 </style>
