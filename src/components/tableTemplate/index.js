@@ -216,7 +216,7 @@ export default {
         this.dialogVisible = true;
       };
       if (this.config.beforeOpen) {
-        this.config.beforeOpen(row, done);
+        this.config.beforeOpen(this.curRow, done);
       } else {
         done();
       }
