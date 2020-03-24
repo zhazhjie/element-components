@@ -88,7 +88,7 @@
       upload(data) {
         return new Promise((resolve, reject) => {
           let xhr = new XMLHttpRequest();
-          let {headers, uploadUrl} = this.config;
+          let {headers, action} = this.config;
           if (headers) {
             for (let key in headers) {
               xhr.setRequestHeader(key, headers[key]);
@@ -99,7 +99,7 @@
               resolve(JSON.parse(xhr.response));
             }
           };
-          xhr.open('post', uploadUrl);
+          xhr.open('post', action);
           xhr.send(data);
         });
       },

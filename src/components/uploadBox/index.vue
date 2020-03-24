@@ -2,7 +2,7 @@
   <el-upload
     ref="upload"
     v-bind="$attrs"
-    :action="config.uploadUrl"
+    :action="config.action"
     :headers="config.headers"
     :before-upload="beforeUpload">
     <slot></slot>
