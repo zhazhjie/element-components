@@ -2,8 +2,8 @@
   <el-upload
     ref="upload"
     v-bind="$attrs"
-    :action="uploadUrl"
-    :headers="headers"
+    :action="config.uploadUrl"
+    :headers="config.headers"
     :before-upload="beforeUpload">
     <slot></slot>
     <slot name="tip" slot="tip"></slot>
@@ -22,10 +22,7 @@
     },
     data() {
       return {
-        uploadUrl: "/public/upload",
-        headers: {
-          token: ""
-        }
+        config: this.$uploadConfig || {}
       }
     },
     methods: {
@@ -47,16 +44,5 @@
 </script>
 
 <style>
-  .avatar-uploader-icon {
-    width: 148px;
-    height: 148px;
-    border: 1px dashed #c0ccda;
-    border-radius: 5px;
-    line-height: 146px;
-    text-align: center;
-    cursor: pointer;
-    font-size: 28px;
-    color: #8c939d;
-    background-color: #fbfdff;
-  }
+
 </style>

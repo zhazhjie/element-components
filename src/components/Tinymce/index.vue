@@ -1,7 +1,8 @@
 <template>
-  <section>
+  <section class="tinymce-box">
     <div :id="tinymceId"></div>
     <upload-img @selectImg='selectImg' :visible.sync='visible'/>
+    <div class="modal" v-if="disabled"></div>
   </section>
 </template>
 
@@ -27,40 +28,45 @@
       },
       height: {
         type: Number,
-        required: false,
         default: 360
+      },
+      disabled: {
+        type: Boolean,
+        default: false,
       }
     },
     data() {
       return {
-        OSS_URL: process.env.VUE_APP_REMOTE_URL,
+        OSS_URL: process.env.VUE_APP_OSS_URL,
         visible: false,
         tinymceId: 'vue-tinymce-' + +new Date(),
-        taskList: []
+        taskList: [],
+        config: this.$uploadConfig || {}
       }
     },
     watch: {
       value(val) {
         if (this.taskList.length) {
           this.taskList.pop();
-          this.$nextTick(() =>
-            window.tinymce.get(this.tinymceId).setContent(val || ''));
+          this.$nextTick(() => this.tinymce.setContent(val || ''));
         }
       }
     },
+    computed: {
+      tinymce() {
+        return window.tinymce.get(this.tinymceId);
+      }
+    },
     mounted() {
-      this.initTinymce()
+      this.initTinymce();
     },
-    activated() {
-      this.initTinymce()
-    },
-    deactivated() {
-      this.destroyTinymce()
+    beforeDestroy() {
+      this.destroyTinymce();
     },
     methods: {
       selectImg(imgList) {
         imgList.forEach(v => {
-          this.insertContent(this.getImg(v));
+          this.tinymce(this.getImg(v));
         })
       },
       getImg(url) {
@@ -79,12 +85,30 @@
         }
         return true;
       },
+      upload(data) {
+        return new Promise((resolve, reject) => {
+          let xhr = new XMLHttpRequest();
+          let {headers, uploadUrl} = this.config;
+          if (headers) {
+            for (let key in headers) {
+              xhr.setRequestHeader(key, headers[key]);
+            }
+          }
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+              resolve(JSON.parse(xhr.response));
+            }
+          };
+          xhr.open('post', uploadUrl);
+          xhr.send(data);
+        });
+      },
       uploadImg(file) {
         let fd = new FormData();
         fd.set("file", file);
         // compressImg({file,maxWidth:1024});
-        upload(fd).then(res => {
-          this.insertContent(this.getImg(res.data));
+        this.upload(fd).then(res => {
+          this.tinymce.insertContent(this.getImg(res.data));
         })
       },
       initTinymce() {
@@ -113,6 +137,7 @@
               this.taskList.push(1);
             }
             editor.on('NodeChange Change KeyUp SetContent', () => {
+              this.taskList.pop();
               this.$emit('input', editor.getContent());
             })
           },
@@ -122,7 +147,6 @@
               if (files.length) {
                 if (!this.checkImg(files[0])) return;
                 this.uploadImg(files[0]);
-                // editor.insertContent(this.defaultImg(id));
               }
             });
             editor.on('drop', (e) => {
@@ -131,7 +155,6 @@
               if (files.length) {
                 if (!this.checkImg(files[0])) return;
                 this.uploadImg(files[0]);
-                // editor.insertContent(this.defaultImg(id));
               }
             });
             editor.on('dragover', (e) => {
@@ -150,18 +173,9 @@
         })
       },
       destroyTinymce() {
-        if (window.tinymce.get(this.tinymceId)) {
-          window.tinymce.get(this.tinymceId).destroy();
+        if (this.tinymce) {
+          this.tinymce.destroy();
         }
-      },
-      insertContent(value) {
-        window.tinymce.get(this.tinymceId).insertContent(value);
-      },
-      setContent(value) {
-        window.tinymce.get(this.tinymceId).setContent(value);
-      },
-      getContent() {
-        window.tinymce.get(this.tinymceId).getContent();
       },
     },
     destroyed() {
@@ -169,9 +183,32 @@
     }
   }
 </script>
+<style scoped>
+  .tinymce-box {
+    position: relative;
+    overflow: hidden;
+  }
 
+  .modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    cursor: not-allowed;
+  }
+</style>
 <style>
   .mce-fullscreen {
-    z-index: 10000;
+    z-index: 10000 !important;
+  }
+
+  .mce-tinymce.mce-container {
+    box-sizing: border-box;
+  }
+
+  .mce-panel {
+    overflow-x: auto;
   }
 </style>
