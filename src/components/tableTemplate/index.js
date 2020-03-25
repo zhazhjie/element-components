@@ -359,12 +359,12 @@ export default {
             return (
               <el-checkbox-group
                 on-change={this.handleFormElChange.bind(this, scope, row)}
-                {...data}
                 disabled={disabled}
                 vModel={row[column.field]}>
                 {options.map(item => {
                   return (
                     <el-checkbox
+                      {...data}
                       label={getItemVal(item, defaultProp.value)}>
                       {this.renderEl(column, scope[type] || {}, item, suffix + toCapitalize(type), () => getItemVal(item, defaultProp.text))}
                     </el-checkbox>
@@ -377,12 +377,12 @@ export default {
           return (
             <el-radio-group
               on-change={this.handleFormElChange.bind(this, scope, row)}
-              {...data}
               disabled={disabled}
               vModel={row[column.field]}>
               {options.map(item => {
                 return (
                   <el-radio
+                    {...data}
                     label={getItemVal(item, defaultProp.value)}>
                     {this.renderEl(column, scope[type] || {}, item, suffix + toCapitalize(type), () => getItemVal(item, defaultProp.text))}
                   </el-radio>

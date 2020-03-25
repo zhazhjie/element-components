@@ -10,7 +10,7 @@
       @submitSearch="handleSubmitSearch"
       @pageChange="handlePageChange"
       :page='params'>
-      <!--<template v-slot:state="row">-->
+      <!--<template v-slot:state="{row}">-->
       <!--<el-tag type="success" v-if="row.state">正常</el-tag>-->
       <!--<el-tag type="danger" v-else>禁用</el-tag>-->
       <!--</template>-->

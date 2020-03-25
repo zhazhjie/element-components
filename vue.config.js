@@ -17,7 +17,7 @@ module.exports = {
     },
   },
   productionSourceMap: false,
-  publicPath: ENV === 'development' ? './' : BASE_PATH,
+  publicPath: './',
   devServer: {
     proxy: process.env.VUE_APP_REMOTE_URL
   },

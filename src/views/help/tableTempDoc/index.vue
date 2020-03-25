@@ -8,8 +8,11 @@
       <el-collapse-item title="示例代码" name="1">
         <demo></demo>
         <pre class="pre">
-          <code>
-            {{demoCode}}
+          <code class="html">
+            {{demoHTML}}
+          </code>
+          <code class="javascript">
+            {{demoJS}}
           </code>
         </pre>
       </el-collapse-item>
@@ -41,8 +44,8 @@
   import Demo from "./demo";
   import DialogFormItemAttribute from "./dialogFormItemAttribute";
   import Methods from "./methods";
-  import {demoCode} from "./demoCode";
-
+  import {demoJS} from "./demoJS";
+  import {demoHTML} from "./demoHTML";
   export default {
     name: "tableTempDoc",
     components: {
@@ -61,7 +64,8 @@
     },
     data() {
       return {
-        demoCode: demoCode,
+        demoJS: demoJS,
+        demoHTML:demoHTML,
         config: {
           withoutDialog: true,
           searchable: false,
@@ -113,16 +117,17 @@
           ],
         },
       }
+    },
+    mounted() {
+      document.querySelectorAll('pre code').forEach((block) => {
+        hljs.highlightBlock(block);
+      });
     }
   }
 </script>
 
 <style scoped>
-  .table-temp-doc .pre {
-    background: #f1f1f1;
-    padding: 0 10px;
-    margin: 10px 0;
-  }
+
 </style>
 <style>
   .table-temp-doc h3 {
