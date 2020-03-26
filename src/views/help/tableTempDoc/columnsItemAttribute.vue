@@ -116,6 +116,27 @@
             defaultValue: "false"
           },
           {
+            param: "disabledInAdd",
+            explain: "是否在新增时禁用",
+            type: "boolean",
+            optionalValue: "true/false",
+            defaultValue: "false"
+          },
+          {
+            param: "disabledInEdit",
+            explain: "是否在编辑时禁用",
+            type: "boolean",
+            optionalValue: "true/false",
+            defaultValue: "false"
+          },
+          {
+            param: "disabledInView",
+            explain: "是否在查看时禁用",
+            type: "boolean",
+            optionalValue: "true/false",
+            defaultValue: "true"
+          },
+          {
             param: "change",
             explain: "表单元素值改变时调用，需要this对象请用箭头函数，接收两个参数Function(value,row)，参数说明：[当前值，当前行]",
             type: "function",

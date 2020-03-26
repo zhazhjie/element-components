@@ -431,7 +431,7 @@ export default {
      * @param row {Object} 行
      * @param suffix {String} 字段后缀
      * @param customRender {Function} 自定义渲染函数
-     * @param disabled {Boolean} 组件是否可操作
+     * @param disabled {Boolean} 组件是否禁用
      * @returns {*} 返回一个组件
      */
     renderEl(column, scope, row, suffix, customRender = null, disabled = false) {
@@ -452,7 +452,7 @@ export default {
      * @param column {Object} 列
      * @param scope {Object} 作用域
      * @param row {Object} 行
-     * @param disabled {Boolean} 组件是否可操作
+     * @param disabled {Boolean} 组件是否禁用
      * @param suffix {String} 字段后缀
      * @returns {*} 返回一个组件
      */
