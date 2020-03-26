@@ -72,6 +72,7 @@
               attrs: {
                 style: "color:red"
               },
+              disabledInEdit:true,
               format: this.formatPhone,
               dialogFormEl: {
                 // render: (row, disabled) => {

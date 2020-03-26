@@ -732,7 +732,7 @@ export default {
       )
     },
     getDisabled(column) {
-      let {disabledInAdd = false, disabledInEdit = true, disabledInView = false} = column;
+      let {disabledInAdd = false, disabledInEdit = false, disabledInView = true} = column;
       switch (true) {
         case this.handleLoading:
           return true;
