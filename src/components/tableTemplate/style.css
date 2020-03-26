@@ -107,21 +107,25 @@
   color: #999;
 }
 
-.table-template .edit-box .clickable{
+.table-template .edit-box .clickable {
   display: inline-block;
   cursor: pointer;
   min-width: 30px;
   min-height: 20px;
 }
 
-.table-template .edit-box input{
+.table-template .edit-box input {
   text-align: center;
 }
 
-.table-template .el-table__header th{
+.table-template .el-table__header th {
   background: #f9f9f9;
 }
 
 .table-template .el-table__column-filter-trigger {
-   line-height: normal;
+  line-height: normal;
+}
+
+.table-template .el-dialog__body {
+  overflow: hidden;
 }

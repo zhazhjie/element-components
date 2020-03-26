@@ -102,10 +102,10 @@ export default {
   },
   data() {
     return {
+      defaultConfig: this.$tableConfig || {},
       dialogTitle: "",
       dialogVisible: false,
       handleLoading: false,
-      // tableLoading: false,
       handleType: 0,  //0新增，1编辑，2查看
       curRow: {},
       searchForm: {},
@@ -116,22 +116,43 @@ export default {
   },
   directives: {
     focus: {
+      /**
+       * 输入框聚焦钩子
+       * @param el
+       */
       inserted(el) {
         el.querySelector('input').focus()
       }
     }
   },
   mounted() {
+    //给父组件注入$table
     this.$parent.$table = this;
     this.getVisibleNum();
   },
   methods: {
+    /**
+     * 显示字段
+     * @param columnIndexList {Array} 列索引
+     * @param type {'table'|'dialog'|'search'} 类型
+     */
     showColumns(columnIndexList = [], type) {
       this.toggleColumns(columnIndexList, type, false);
     },
+    /**
+     * 隐藏字段
+     * @param columnIndexList
+     * @param type
+     */
     hideColumns(columnIndexList = [], type) {
       this.toggleColumns(columnIndexList, type, true);
     },
+    /**
+     * 切换字段显隐
+     * @param columnIndexList
+     * @param type
+     * @param flag
+     */
     toggleColumns(columnIndexList = [], type, flag) {
       let {columns} = this.config;
       let typeCap = toCapitalize(type);
@@ -146,18 +167,34 @@ export default {
         }
       })
     },
+    /**
+     * 触发事件
+     * @param event {String} 事件名
+     * @param args {...Object} 参数
+     */
     emitEvent(event, ...args) {
       this.$emit(event, ...args);
       this.$emit(toCamelBak(event), ...args);
     },
+    /**
+     * 点击分页
+     * @param pageSize
+     */
     handleSizeChange(pageSize) {
       this.page.pageSize = pageSize;
       this.emitEvent("page-change");
     },
+    /**
+     * 切换每页显示条数
+     * @param curPage
+     */
     handleCurrentChange(curPage) {
       this.page.currentPage = curPage;
       this.emitEvent("page-change");
     },
+    /**
+     * 弹出层确认事件(新增和修改)
+     */
     handleSubmit() {
       this.$refs.form.validate((valid) => {
         if (valid) {
@@ -169,28 +206,45 @@ export default {
         }
       });
     },
+    /**
+     * 取消弹出层确认按钮loading
+     */
     hideLoading() {
       this.handleLoading = false;
     },
+    /**
+     * 关闭弹出层
+     */
     closeDialog() {
       // this.emitEvent("before-close");
       let done = () => {
         this.dialogVisible = false;
         this.resetForm();
       };
-      if (this.config.beforeClose) {
-        this.config.beforeClose(this.handleType ? this.curRow : null, done);
+      let {beforeClose} = this.config;
+      if (beforeClose) {
+        beforeClose(this.handleType ? this.curRow : null, done);
       } else {
         done();
       }
     },
+    /**
+     * 取消loading并关闭弹出层
+     */
     done() {
       this.hideLoading();
       this.closeDialog();
     },
+    /**
+     * 新增事件
+     */
     handleAdd() {
       this.showAdd();
     },
+    /**
+     * 显示新增弹出层
+     * @param dialogTitle
+     */
     showAdd(dialogTitle = "新增") {
       this.handleEvent(null, dialogTitle, 0);
     },
@@ -200,6 +254,12 @@ export default {
     showView(row, dialogTitle = "查看") {
       this.handleEvent(row, dialogTitle, 2);
     },
+    /**
+     * 事件处理
+     * @param row
+     * @param dialogTitle
+     * @param handleType
+     */
     handleEvent(row, dialogTitle, handleType) {
       // this.emitEvent(event, row);
       this.handleType = handleType;
@@ -216,18 +276,30 @@ export default {
       let done = () => {
         this.dialogVisible = true;
       };
-      if (this.config.beforeOpen) {
-        this.config.beforeOpen(this.handleType ? this.curRow : null, done);
+      let {beforeOpen} = this.config;
+      if (beforeOpen) {
+        beforeOpen(this.handleType ? this.curRow : null, done);
       } else {
         done();
       }
     },
+    /**
+     * 重置弹出层表单
+     */
     resetForm() {
       this.$refs.form.resetFields();
     },
+    /**
+     * 清除表格勾选框
+     */
     clearSelection() {
       this.$refs.table.clearSelection();
     },
+    /**
+     * 操作栏点击事件
+     * @param event
+     * @param row
+     */
     handleClick(event, row) {
       let events = ["showAdd", "showView", "showEdit"];
       if (events.indexOf(event) > -1) {
@@ -255,12 +327,20 @@ export default {
       let {change} = scope;
       if (change) change(val, row);
     },
+    /**
+     * 重置搜索栏字段
+     */
     handleReset() {
       for (let key in this.searchForm) {
         this.searchForm[key] = null;
       }
       this.emitEvent("search-reset");
     },
+    /**
+     * 双击编辑表格字段
+     * @param fieldKey
+     * @param fieldVal
+     */
     handleFieldClick(fieldKey, fieldVal) {
       let curField = this.fieldMap[fieldKey];
       if (curField) {
@@ -275,6 +355,14 @@ export default {
         this.fieldMap = {...this.fieldMap};
       }
     },
+    /**
+     * 双击编辑事件处理器
+     * @param column
+     * @param fieldKey
+     * @param fieldVal
+     * @param row
+     * @returns {boolean}
+     */
     handleInputBlur(column, fieldKey, fieldVal, row) {
       let curField = this.fieldMap[fieldKey] || {};
       if (curField.value === fieldVal) {
@@ -292,17 +380,28 @@ export default {
         done();
       }
     },
+    /**
+     * 折叠搜索栏
+     */
     handleSlide() {
       this.slideFlag = !this.slideFlag;
     },
+    /**
+     * 按钮权限
+     * @param permission
+     * @returns {boolean}
+     */
     hasPermission(permission) {
       if (!permission) {
         return true;
       } else {
-        let {permissions = []} = this.config;
+        let {permissions = this.defaultConfig.permission || []} = this.config;
         return permissions.some(perms => perms === permission)
       }
     },
+    /**
+     * 获取搜索栏可显示表单组件数量
+     */
     getVisibleNum() {
       let {collapsible = false, searchable = true} = this.config;
       if (collapsible && searchable) {
@@ -325,7 +424,17 @@ export default {
         this.visibleNum = visibleNum;
       }
     },
-    renderEl(column, scope, row, suffix, customRender, disabled) {
+    /**
+     * 同一渲染入口
+     * @param column {Object} 列
+     * @param scope {Object} 作用域
+     * @param row {Object} 行
+     * @param suffix {String} 字段后缀
+     * @param customRender {Function} 自定义渲染函数
+     * @param disabled {Boolean} 组件是否可操作
+     * @returns {*} 返回一个组件
+     */
+    renderEl(column, scope, row, suffix, customRender = null, disabled = false) {
       let {render} = scope;
       let scopedSlots = this.$scopedSlots[column.field + suffix];
       if (render) {
@@ -338,6 +447,15 @@ export default {
         return this.createEl(column, scope || {}, row, disabled, suffix);
       }
     },
+    /**
+     * 创建组件
+     * @param column {Object} 列
+     * @param scope {Object} 作用域
+     * @param row {Object} 行
+     * @param disabled {Boolean} 组件是否可操作
+     * @param suffix {String} 字段后缀
+     * @returns {*} 返回一个组件
+     */
     createEl(column = {}, scope = {}, row = {}, disabled = false, suffix) {
       let {options = [], defaultProp = {value: "value", text: "text"}} = column;
       let {type, props = {}, attrs = {}} = scope;
@@ -533,6 +651,9 @@ export default {
           );
       }
     },
+    /**
+     * 创建弹出层
+     */
     createDialog() {
       let {mode = "dialog", dialogProps = {}, dialogAttrs = {}, dialogFormRender, dialogFooterRender} = this.config;
       let formColumn = {field: "dialogForm", dialogFormRender};
@@ -575,6 +696,9 @@ export default {
         </div>
       )
     },
+    /**
+     * 创建弹出层表单
+     */
     createForm() {
       let {columns = [], dialogFormProps = {}, dialogFormAttrs = {}, rules = {}, group = []} = this.config;
       let dialogColumns = group.length ? group : columns;
@@ -607,11 +731,30 @@ export default {
         </el-form>
       )
     },
+    getDisabled(column) {
+      let {disabledInAdd = false, disabledInEdit = true, disabledInView = false} = column;
+      switch (true) {
+        case this.handleLoading:
+          return true;
+        case this.handleType === 0:
+          return disabledInAdd;
+        case this.handleType === 1:
+          return disabledInEdit;
+        case this.handleType === 2:
+          return disabledInView;
+        default:
+          return false;
+      }
+    },
+    /**
+     * 创建弹出层表单项
+     */
     createFormItem(column) {
       if (!column || column.hideInDialog) {
         return null;
       } else {
         let {props = {}, attrs = {}, append, span} = column.dialogFormItem || {};
+        let disabled = this.getDisabled(column);
         return (
           <el-col span={span}>
             <el-form-item
@@ -619,13 +762,16 @@ export default {
               props={props}
               attrs={attrs}
               prop={column.field}>
-              {this.renderEl(column, column.dialogFormEl || {}, this.curRow, "Form", null, this.handleType === 2 || this.handleLoading)}
+              {this.renderEl(column, column.dialogFormEl || {}, this.curRow, "Form", null, disabled)}
             </el-form-item>
             {append && append(this.curRow)}
           </el-col>
         )
       }
     },
+    /**
+     * 设置表格过滤字段
+     */
     setFilters(column) {
       let {filterable, props = {}, defaultProp, field, options} = column;
       if (filterable) {
@@ -677,6 +823,7 @@ export default {
     return (
       <section class="table-template">
         {!withoutTable && <div>
+          {/*搜索栏*/}
           {searchable &&
           <div class="search-bar-wrapper">
             <el-form
@@ -708,11 +855,14 @@ export default {
                 {this.$scopedSlots.search && this.$scopedSlots.search()}
               </el-form-item>
             </el-form>
+            {/*搜索栏折叠*/}
             {collapsible && searchColumns.length > this.visibleNum &&
             <i class={"el-icon-d-arrow-right slide-btn " + (this.slideFlag ? "down" : "")}
                on-click={this.handleSlide.bind(this)}> </i>}
           </div>
           }
+          {/*新增栏*/}
+          {(addable || this.$scopedSlots.add) &&
           <el-form>
             <el-form-item>
               {addable && this.hasPermission(addPermission) &&
@@ -721,9 +871,13 @@ export default {
               {this.$scopedSlots.add && this.$scopedSlots.add()}
             </el-form-item>
           </el-form>
+          }
+          {/*表格顶部插槽*/}
           <div>{this.$scopedSlots.tableTop && this.$scopedSlots.tableTop()}</div>
           <div class="content">
+            {/*表格左侧插槽*/}
             {this.$scopedSlots.tableLeft && this.$scopedSlots.tableLeft()}
+            {/*表格*/}
             <el-table
               ref="table"
               class="table"
@@ -737,6 +891,7 @@ export default {
               on-select={this.handleSelect.bind(this)}
               on-select-all={this.handleSelectAll.bind(this)}
             >
+              {/*表格勾选框*/}
               {selectable &&
               <el-table-column
                 type="selection"
@@ -744,11 +899,13 @@ export default {
                 width="50"
                 attrs={selectionAttrs}
                 props={selectionProps}/>}
+              {/*表格索引栏*/}
               {showIndex &&
               <el-table-column
                 type="index"
                 align="center"
                 width="50"/>}
+              {/*表格内部扩展*/}
               {expandable && <el-table-column
                 type="expand"
                 scopedSlots={{
@@ -777,6 +934,7 @@ export default {
                               let fieldVal = row[field];
                               let fieldKey = field + $index;
                               let curField = this.fieldMap[fieldKey];
+                              // 表格字段双击可编辑
                               if (editable) {
                                 return (
                                   <span class="edit-box">
@@ -801,6 +959,7 @@ export default {
                               }
                             } : null);
                           },
+                          // 自定义表头
                           header: scope => {
                             return this.renderEl(column, header, scope.row, "Header", () => {
                               return label;
@@ -811,6 +970,7 @@ export default {
                   }
                 })
               }
+              {/*操作栏*/}
               {
                 (handlerList.length || handlerListSlots) &&
                 <el-table-column
@@ -848,6 +1008,7 @@ export default {
             </el-table>
             {this.$scopedSlots.tableRight && this.$scopedSlots.tableRight()}
           </div>
+          {/*分页*/}
           {pageable &&
           <el-pagination
             style='margin-top:20px;text-align:right'
@@ -860,6 +1021,7 @@ export default {
             layout="total, sizes, prev, pager, next, jumper"/>
           }
         </div>}
+        {/*弹出层*/}
         {!withoutDialog && this.createDialog()}
       </section>
     )

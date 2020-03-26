@@ -27,7 +27,7 @@ export let demoJS =
         ],
         config: {
           dialogProps: {width: '500px'},
-          handlerProps: {width: '140px'},
+          handlerProps: {width: '170px'},
           group: [{title: "分组1", columnIndexList: [1, 2]}, {title: "分组2", columnIndexList: [3]}],
           columns: [
             {
@@ -40,9 +40,6 @@ export let demoJS =
               label: '用户名',
               field: 'username',
               editable: true,
-              dialogFormItem: {
-                // span: 12
-              },
               submit: (val, row, done) => {
                 setTimeout(() => {
                   row.username = val;
@@ -55,8 +52,14 @@ export let demoJS =
               label: '手机',
               field: 'phone',
               hideInSearch: true,
-              dialogFormItem: {
-                // span: 12
+              attrs: {
+                style: "color:red"
+              },
+              format: this.formatPhone,
+              dialogFormEl: {
+                // render: (row, disabled) => {
+                //   return <el-input-number vModel={row.phone}/>
+                // }
               },
             },
             {
@@ -65,6 +68,14 @@ export let demoJS =
               type: 'tag',
               value: 1,
               options: [{value: 1, text: "正常"}, {value: 0, text: "禁用"}],
+              filterable: true,
+              props: {
+                // columnKey: "state",
+                // filters: [{value: 1, text: "正常"}, {value: 0, text: "禁用"}],
+                // filterMethod: (value,row,column) => {
+                //   return row.state===value;
+                // }
+              },
               typeMapping: {
                 0: "danger",
                 1: "success"
@@ -74,6 +85,9 @@ export let demoJS =
               // },
               dialogFormEl: {
                 type: "radio",
+                props: {
+                  border: true
+                },
                 change: val => {
                   this.$message.info("状态值变为：" + val);
                 }
@@ -88,15 +102,9 @@ export let demoJS =
           ],
           handlerList: [
             {
-              render: row => {
-                return (
-                  <el-checkbox
-                    style="margin-right:5px"
-                    true-label={1}
-                    false-label={0}
-                    vModel={row.state}></el-checkbox>
-                )
-              }
+              label: '查看',
+              icon: 'el-icon-view',
+              event: 'showView'
             },
             {
               label: '编辑',

@@ -69,10 +69,10 @@
               label: '手机',
               field: 'phone',
               hideInSearch: true,
-              attrs:{
-                style:"color:red"
+              attrs: {
+                style: "color:red"
               },
-              format:this.formatPhone,
+              format: this.formatPhone,
               dialogFormEl: {
                 // render: (row, disabled) => {
                 //   return <el-input-number vModel={row.phone}/>
@@ -85,7 +85,7 @@
               type: 'tag',
               value: 1,
               options: [{value: 1, text: "正常"}, {value: 0, text: "禁用"}],
-              filterable:true,
+              filterable: true,
               props: {
                 // columnKey: "state",
                 // filters: [{value: 1, text: "正常"}, {value: 0, text: "禁用"}],
@@ -102,6 +102,9 @@
               // },
               dialogFormEl: {
                 type: "radio",
+                props: {
+                  border: true
+                },
                 change: val => {
                   this.$message.info("状态值变为：" + val);
                 }

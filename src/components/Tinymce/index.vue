@@ -1,5 +1,5 @@
 <template>
-  <section class="tinymce-box">
+  <section class="tinymce-box" v-loading="loading">
     <div :id="tinymceId"></div>
     <upload-img @selectImg='selectImg' :visible.sync='visible'/>
     <div class="modal" v-if="disabled"></div>
@@ -37,6 +37,7 @@
     },
     data() {
       return {
+        loading: false,
         OSS_URL: process.env.VUE_APP_OSS_URL,
         visible: false,
         tinymceId: 'vue-tinymce-' + +new Date(),
