@@ -395,7 +395,7 @@ export default {
       if (!permission) {
         return true;
       } else {
-        let {permissions = this.defaultConfig.permission || []} = this.config;
+        let {permissions = this.defaultConfig.permissions || []} = this.config;
         return permissions.some(perms => perms === permission)
       }
     },
