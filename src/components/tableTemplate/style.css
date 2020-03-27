@@ -126,6 +126,6 @@
   line-height: normal;
 }
 
-.table-template .el-dialog__body {
+.table-dialog .el-dialog__body {
   overflow: hidden;
 }

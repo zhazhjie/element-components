@@ -661,6 +661,7 @@ export default {
       if (mode === "dialog") {
         return (
           <el-dialog
+            class="table-dialog"
             title={this.dialogTitle}
             visible={this.dialogVisible}
             before-close={this.closeDialog.bind(this)}
