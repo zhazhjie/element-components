@@ -10,7 +10,7 @@
     :default-active="$route.path"
     class="el-menu-vertical"
     :collapse="isCollapse"
-    background-color="#545c64"
+    background-color="#333"
     text-color="#fff">
     <div class="logo">
       <img src="../../../img/logo.png">
