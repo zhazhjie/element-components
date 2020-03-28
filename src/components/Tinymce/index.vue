@@ -1,8 +1,9 @@
 <template>
-  <section class="tinymce-box" v-loading="loading">
+  <section class="tinymce-box">
     <div :id="tinymceId"></div>
     <upload-img @selectImg='selectImg' :visible.sync='visible'/>
     <div class="modal" v-if="disabled"></div>
+    <el-button class="tips" type="text" v-show="loading" :loading="loading">图片上传中</el-button>
   </section>
 </template>
 
@@ -10,6 +11,7 @@
   import plugins from './plugins'
   import toolbar from './toolbar'
   import UploadImg from "./uploadImg";
+  import {checkImg} from "../utils";
 
   export default {
     name: 'tinymce',
@@ -42,7 +44,7 @@
         visible: false,
         tinymceId: 'vue-tinymce-' + +new Date(),
         taskList: [],
-        config: this.$uploadConfig || {}
+        uploadConfig: this.$uploadConfig || {}
       }
     },
     watch: {
@@ -74,25 +76,20 @@
         return `<img class="wscnph" style="max-width: 100%" src="${this.OSS_URL + url}" />`
       },
       checkImg(file) {
-        let limitType = /^image\/(jpeg|jpg|png)$/ig.test(file.type);
-        let limitSize = file.size / 1024 / 1024 < this.size;
-        if (!limitType) {
-          this.$message.error('图片只能是 jpg/png 格式!');
-          return false;
-        }
-        if (!limitSize) {
-          this.$message.error('图片大小不能超过 5MB!');
-          return false;
-        }
-        return true;
+        return checkImg(file, this.uploadConfig.size || this.size);
       },
       upload(data) {
         return new Promise((resolve, reject) => {
           let xhr = new XMLHttpRequest();
-          let {headers, action} = this.config;
+          let {headers, action} = this.uploadConfig;
           xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-              resolve(JSON.parse(xhr.response));
+            if (xhr.readyState === 4) {
+              let {status, response} = xhr;
+              if (status === 200) {
+                resolve(JSON.parse(response));
+              } else {
+                reject(response);
+              }
             }
           };
           xhr.open('post', action);
@@ -105,12 +102,18 @@
         });
       },
       uploadImg(file) {
+        this.loading = true;
         let fd = new FormData();
         fd.set("file", file);
         // compressImg({file,maxWidth:1024});
         this.upload(fd).then(res => {
           this.tinymce.insertContent(this.getImg(res.data));
+          this.loading = false;
         })
+          .catch(() => {
+            this.loading = false;
+            this.$message.error("图片上传失败");
+          });
       },
       initTinymce() {
         window.tinymce.init({
@@ -211,5 +214,11 @@
 
   .mce-panel {
     overflow-x: auto;
+  }
+
+  .tinymce-box .tips {
+    position: absolute;
+    top: 4px;
+    right: 10px;
   }
 </style>

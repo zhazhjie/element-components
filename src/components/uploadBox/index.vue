@@ -4,6 +4,7 @@
     v-bind="$attrs"
     :action="config.action"
     :headers="config.headers"
+    :on-error="handleError"
     :before-upload="beforeUpload">
     <slot></slot>
     <slot name="tip" slot="tip"></slot>
@@ -11,6 +12,8 @@
 </template>
 
 <script>
+
+  import {checkImg} from "../utils";
 
   export default {
     name: "uploadBox",
@@ -26,16 +29,11 @@
       }
     },
     methods: {
+      handleError() {
+        this.$message.error('图片上传失败');
+      },
       beforeUpload(file) {
-        let limitType = /^image\/(jpeg|jpg|png)$/ig.test(file.type);
-        let limitSize = file.size / 1024 / 1024 < this.size;
-        if (!limitType) {
-          this.$message.error('图片只能是 jpg/png 格式!');
-        }
-        if (!limitSize) {
-          this.$message.error('图片大小不能超过 5MB!');
-        }
-        return limitType && limitSize;
+        return checkImg(file, this.config.size || this.size);
       }
     },
     mounted() {
