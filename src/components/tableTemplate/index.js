@@ -308,10 +308,12 @@ export default {
     },
     /**
      * 操作栏点击事件
-     * @param event
+     * @param item
      * @param row
      */
-    handleClick(event, row) {
+    handleClick(item, row) {
+      let {click, event} = row;
+      if (click) return click(row);
       let events = ["showAdd", "showView", "showEdit"];
       if (events.indexOf(event) > -1) {
         this[event](row);
@@ -675,7 +677,7 @@ export default {
             class="table-dialog"
             title={this.dialogTitle}
             visible={this.dialogVisible}
-            before-close={this.closeDialog.bind(this)}
+            before-close={this.closeDialog}
             close-on-click-modal={false}
             props={dialogProps}
             attrs={dialogAttrs}>
@@ -688,7 +690,7 @@ export default {
           <el-drawer
             title={this.dialogTitle}
             visible={this.dialogVisible}
-            before-close={this.closeDialog.bind(this)}
+            before-close={this.closeDialog}
             close-on-click-modal={false}
             props={dialogProps}
             attrs={dialogAttrs}>
@@ -701,9 +703,9 @@ export default {
     createDialogFooter(slot, className) {
       return (
         <div slot={slot} class={className}>
-          <el-button on-click={this.closeDialog.bind(this)}>取 消</el-button>
+          <el-button on-click={this.closeDialog}>取 消</el-button>
           {this.handleType !== 2 &&
-          <el-button type="primary" loading={this.handleLoading} on-click={this.handleSubmit.bind(this)}>确 定
+          <el-button type="primary" loading={this.handleLoading} on-click={this.handleSubmit}>确 定
           </el-button>}
         </div>
       )
@@ -862,15 +864,15 @@ export default {
                 })
               }
               <el-form-item ref="searchOpt" style="width:auto;margin-left:10px">
-                <el-button type='primary' on-click={this.handleSearch.bind(this)}>查询</el-button>
-                {showReset && <el-button on-click={this.handleReset.bind(this)}>重置</el-button>}
+                <el-button type='primary' on-click={this.handleSearch}>查询</el-button>
+                {showReset && <el-button on-click={this.handleReset}>重置</el-button>}
                 {this.$scopedSlots.search && this.$scopedSlots.search()}
               </el-form-item>
             </el-form>
             {/*搜索栏折叠*/}
             {collapsible && searchColumns.length > this.visibleNum &&
             <i class={"el-icon-d-arrow-right slide-btn " + (this.slideFlag ? "down" : "")}
-               on-click={this.handleSlide.bind(this)}> </i>}
+               on-click={this.handleSlide}> </i>}
           </div>
           }
           {/*新增栏*/}
@@ -879,7 +881,7 @@ export default {
             <el-form-item>
               {addable && this.hasPermission(addPermission) &&
               <el-button type='primary'
-                         on-click={this.handleAdd.bind(this)}>新增</el-button>}
+                         on-click={this.handleAdd}>新增</el-button>}
               {this.$scopedSlots.add && this.$scopedSlots.add()}
             </el-form-item>
           </el-form>
@@ -898,10 +900,10 @@ export default {
               props={tableProps}
               attrs={tableAttrs}
               border
-              on-selection-change={this.handleSelectionChange.bind(this)}
-              on-row-click={this.handleRowClick.bind(this)}
-              on-select={this.handleSelect.bind(this)}
-              on-select-all={this.handleSelectAll.bind(this)}
+              on-selection-change={this.handleSelectionChange}
+              on-row-click={this.handleRowClick}
+              on-select={this.handleSelect}
+              on-select-all={this.handleSelectAll}
             >
               {/*表格勾选框*/}
               {selectable &&
@@ -1005,7 +1007,7 @@ export default {
                                 icon={item.icon}
                                 props={item.props}
                                 attrs={item.attrs}
-                                on-click={item.click ? item.click.bind(this, scope.row) : this.handleClick.bind(this, item.event, scope.row)}>
+                                on-click={this.handleClick.bind(this, item, scope.row)}>
                                 {item.label}
                               </el-button>
                             )

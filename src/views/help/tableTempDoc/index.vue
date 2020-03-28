@@ -46,6 +46,7 @@
   import Methods from "./methods";
   import {demoJS} from "./demoJS";
   import {demoHTML} from "./demoHTML";
+
   export default {
     name: "tableTempDoc",
     components: {
@@ -65,7 +66,7 @@
     data() {
       return {
         demoJS: demoJS,
-        demoHTML:demoHTML,
+        demoHTML: demoHTML,
         config: {
           withoutDialog: true,
           searchable: false,

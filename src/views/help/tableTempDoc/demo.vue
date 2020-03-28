@@ -43,6 +43,7 @@
           }
         ],
         config: {
+          selectable:true,
           dialogProps: {width: '500px'},
           handlerProps: {width: '170px'},
           group: [{title: "分组1", columnIndexList: [1, 2]}, {title: "分组2", columnIndexList: [3]}],
@@ -72,8 +73,8 @@
               attrs: {
                 style: "color:red"
               },
-              disabledInEdit:true,
-              format: this.formatPhone,
+              disabledInEdit: true,
+              format: val => val.substring(0, 3) + "****" + val.substring(7),
               dialogFormEl: {
                 // render: (row, disabled) => {
                 //   return <el-input-number vModel={row.phone}/>
