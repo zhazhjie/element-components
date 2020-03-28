@@ -455,7 +455,7 @@ export default {
       } else if (customRender) {
         return customRender(row);
       } else {
-        return this.createEl(column, scope || {}, row, disabled, suffix);
+        return this.createEl(column, scope || {}, row, suffix, disabled);
       }
     },
     /**
@@ -463,11 +463,11 @@ export default {
      * @param column {Column} 列
      * @param scope {Column} 作用域
      * @param row {Object} 行
-     * @param disabled {Boolean} 组件是否禁用
      * @param suffix {String} 字段后缀
+     * @param disabled {Boolean} 组件是否禁用
      * @returns {*} 返回一个组件
      */
-    createEl(column = {}, scope = {}, row = {}, disabled = false, suffix) {
+    createEl(column = {}, scope = {}, row = {}, suffix, disabled = false) {
       let {options = [], defaultProp = {value: "value", text: "text"}} = column;
       let {type, props = {}, attrs = {}} = scope;
       let data = {props, attrs};
