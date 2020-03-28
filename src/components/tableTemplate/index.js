@@ -11,6 +11,17 @@ import "./style.css";
 // import tinymce from "../Tinymce"
 
 /**
+ * @typedef {Object} Column
+ * @property {String} field
+ * @property {String} [label]
+ * @property {String} [type]
+ * @property {Object} [attrs]
+ * @property {Object} [props]
+ * @property {Function} [render]
+ * @property {Function} [change]
+ */
+
+/**
  * 获取值类型 [object ?]
  * @param value
  * @returns {string}
@@ -357,11 +368,11 @@ export default {
     },
     /**
      * 双击编辑事件处理器
-     * @param column
-     * @param fieldKey
-     * @param fieldVal
-     * @param row
-     * @returns {boolean}
+     * @param column {Column}
+     * @param fieldKey {String}
+     * @param fieldVal {String}
+     * @param row {Object}
+     * @returns {Boolean}
      */
     handleInputBlur(column, fieldKey, fieldVal, row) {
       let curField = this.fieldMap[fieldKey] || {};
@@ -388,8 +399,8 @@ export default {
     },
     /**
      * 按钮权限
-     * @param permission
-     * @returns {boolean}
+     * @param permission {String}
+     * @returns {Boolean}
      */
     hasPermission(permission) {
       if (!permission) {
@@ -426,8 +437,8 @@ export default {
     },
     /**
      * 同一渲染入口
-     * @param column {Object} 列
-     * @param scope {Object} 作用域
+     * @param column {Column} 列
+     * @param scope {Column} 作用域
      * @param row {Object} 行
      * @param suffix {String} 字段后缀
      * @param customRender {Function} 自定义渲染函数
@@ -449,8 +460,8 @@ export default {
     },
     /**
      * 创建组件
-     * @param column {Object} 列
-     * @param scope {Object} 作用域
+     * @param column {Column} 列
+     * @param scope {Column} 作用域
      * @param row {Object} 行
      * @param disabled {Boolean} 组件是否禁用
      * @param suffix {String} 字段后缀

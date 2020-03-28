@@ -133,7 +133,7 @@
   .table-temp-doc h3 {
     font-size: 25px;
     font-weight: 400;
-    margin-top: 20px;
+    margin: 40px 0 10px;
   }
 
   .table-temp-doc .tips {

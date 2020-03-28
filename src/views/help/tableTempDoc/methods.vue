@@ -1,7 +1,7 @@
 <template>
   <section>
     <h3>Methods</h3>
-    <p class="tips">模版暴露出来的方法，需要手动调用，如：this.$refs.table.showAdd()</p>
+    <p class="tips">模版暴露出来的方法，可手动调用，如：this.$table.showAdd()，自动注入$table实例</p>
     <table-template
       :data="methodList"
       :config="config">
@@ -64,19 +64,29 @@
             cb: "Function(row)，参数说明：[当前行]",
           },
           {
+            method: "closeDialog",
+            explain: "关闭弹出层窗口",
+            cb: "Function()",
+          },
+          {
+            method: "resetForm",
+            explain: "重置弹出层表单",
+            cb: "Function()",
+          },
+          {
             method: "clearSelection",
             explain: "用于多选表格，清空用户的选择",
             cb: "Function()",
           },
           {
             method: "showColumns",
-            explain: "显示某些字段，参数说明：[行索引数组，类型(可选table,dialog,search)]",
-            cb: "Function(columnIndexList,type)",
+            explain: "显示字段",
+            cb: "Function(columnIndexList,type)，参数说明：[列索引数组，类型(可选值table|dialog|search)]",
           },
           {
             method: "hideColumns",
-            explain: "隐藏某些字段，参数说明：[行索引数组，类型(可选table,dialog,search)]",
-            cb: "Function(columnIndexList,type)",
+            explain: "隐藏字段",
+            cb: "Function(columnIndexList,type)，参数说明：[列索引数组，类型(可选值table|dialog|search)]",
           },
         ],
       }
