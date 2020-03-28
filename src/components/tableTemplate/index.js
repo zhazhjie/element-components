@@ -312,7 +312,7 @@ export default {
      * @param row
      */
     handleClick(item, row) {
-      let {click, event} = row;
+      let {click, event} = item;
       if (click) return click(row);
       let events = ["showAdd", "showView", "showEdit"];
       if (events.indexOf(event) > -1) {
