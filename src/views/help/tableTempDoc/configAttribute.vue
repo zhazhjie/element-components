@@ -227,6 +227,13 @@
             optionalValue: "-",
             defaultValue: "-"
           },
+          {
+            param: "dialogFooterRender",
+            explain: "自定义弹出层操作栏",
+            type: "function",
+            optionalValue: "-",
+            defaultValue: "-"
+          },
         ],
       }
     },

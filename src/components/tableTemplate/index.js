@@ -669,8 +669,8 @@ export default {
      */
     createDialog() {
       let {mode = "dialog", dialogProps = {}, dialogAttrs = {}, dialogFormRender, dialogFooterRender} = this.config;
-      let formColumn = {field: "dialogForm", dialogFormRender};
-      let footerColumn = {field: "dialogFooter", dialogFooterRender};
+      let formColumn = {field: "dialogForm", render: dialogFormRender};
+      let footerColumn = {field: "dialogFooter", render: dialogFooterRender};
       if (mode === "dialog") {
         return (
           <el-dialog

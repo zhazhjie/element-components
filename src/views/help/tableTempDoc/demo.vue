@@ -58,6 +58,7 @@
               label: '用户名',
               field: 'username',
               editable: true,
+              disabledInEdit: true,
               submit: (val, row, done) => {
                 setTimeout(() => {
                   row.username = val;
@@ -73,7 +74,6 @@
               attrs: {
                 style: "color:red"
               },
-              disabledInEdit: true,
               format: val => val.substring(0, 3) + "****" + val.substring(7),
               dialogFormEl: {
                 // render: (row, disabled) => {
