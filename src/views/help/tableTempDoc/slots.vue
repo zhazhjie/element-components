@@ -53,6 +53,10 @@
             explain: "插入到搜索按钮后面"
           },
           {
+            name: "tableTop",
+            explain: "插入到表格顶部"
+          },
+          {
             name: "tableLeft",
             explain: "插入到表格左侧"
           },
