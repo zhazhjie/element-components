@@ -67,6 +67,9 @@
       this.destroyTinymce();
     },
     methods: {
+      resetContent() {
+        this.tinymce.setContent(this.value || '');
+      },
       selectImg(imgList) {
         imgList.forEach(v => {
           this.tinymce(this.getImg(v));
