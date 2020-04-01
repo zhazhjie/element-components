@@ -39,18 +39,18 @@
     },
     data() {
       return {
+        initFlag:false,
         loading: false,
         OSS_URL: process.env.VUE_APP_OSS_URL,
         visible: false,
         tinymceId: 'vue-tinymce-' + +new Date(),
-        taskList: [],
         uploadConfig: this.$uploadConfig || {}
       }
     },
     watch: {
       value(val) {
-        if (this.taskList.length) {
-          this.taskList.pop();
+        if (!this.initFlag) {
+          this.initFlag=true;
           this.$nextTick(() => this.tinymce.setContent(val || ''));
         }
       }
@@ -67,8 +67,8 @@
       this.destroyTinymce();
     },
     methods: {
-      resetContent() {
-        this.tinymce.setContent(this.value || '');
+      resetContent(value) {
+        this.tinymce.setContent(value);
       },
       selectImg(imgList) {
         imgList.forEach(v => {
@@ -140,11 +140,9 @@
           init_instance_callback: editor => {
             if (this.value) {
               editor.setContent(this.value);
-            } else {
-              this.taskList.push(1);
+              this.initFlag=true;
             }
-            editor.on('NodeChange Change KeyUp SetContent', () => {
-              this.taskList.pop();
+            editor.on('Change', () => {
               this.$emit('input', editor.getContent());
             })
           },
