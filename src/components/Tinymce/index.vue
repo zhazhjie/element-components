@@ -39,7 +39,7 @@
     },
     data() {
       return {
-        initFlag:false,
+        initFlag: false,
         loading: false,
         OSS_URL: process.env.VUE_APP_OSS_URL,
         visible: false,
@@ -50,7 +50,7 @@
     watch: {
       value(val) {
         if (!this.initFlag) {
-          this.initFlag=true;
+          this.initFlag = true;
           this.$nextTick(() => this.tinymce.setContent(val || ''));
         }
       }
@@ -68,7 +68,7 @@
     },
     methods: {
       resetContent(value) {
-        this.tinymce.setContent(value);
+        this.tinymce.setContent(value || "");
       },
       selectImg(imgList) {
         imgList.forEach(v => {
@@ -140,7 +140,7 @@
           init_instance_callback: editor => {
             if (this.value) {
               editor.setContent(this.value);
-              this.initFlag=true;
+              this.initFlag = true;
             }
             editor.on('Change', () => {
               this.$emit('input', editor.getContent());
