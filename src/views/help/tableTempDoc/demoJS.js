@@ -127,8 +127,8 @@ export let demoJS =
           },
         },
         params: {
-          current: 1,
-          size: 10,
+          currentPage: 1,
+          pageSize: 10,
           total: 10
         },
       }
