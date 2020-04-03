@@ -18,7 +18,7 @@
     </div>
     <el-menu-item index='/' @click='$router.push("/")'>
       <i class="icon-home"></i>
-      <span slot="title">首页</span>
+      <span slot="title">快速上手</span>
     </el-menu-item>
     <nav-item :menu="menuList" :isCollapse="isCollapse"></nav-item>
   </el-menu>
