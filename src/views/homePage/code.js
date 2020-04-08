@@ -5,7 +5,7 @@
  */
 export const install =
   `
-  cnpm install git+http://git.tigoyun.com/zzhijie/element-components.git
+  cnpm install git+http://git.tigoyun.com/zzhijie/element-components.git --save
   `;
 export const code =
   `
