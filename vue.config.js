@@ -15,6 +15,9 @@ module.exports = {
       'element-ui': 'ELEMENT',
       'html2canvas': 'html2canvas'
     },
+    output: {
+      libraryExport: 'default'
+    }
   },
   productionSourceMap: false,
   publicPath: './',
