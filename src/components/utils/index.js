@@ -20,7 +20,11 @@ export function checkImg(file, size = 5, type = /^image\/(jpeg|jpg|png)$/ig) {
     return false;
   }
   if (!limitSize) {
-    Vue.prototype.$message.error('图片大小不能超过 5MB!');
+    let sizeTips = size + "MB";
+    if (size < 0) {
+      sizeTips = size * 1024 + "KB";
+    }
+    Vue.prototype.$message.error(`图片大小不能超过 ${sizeTips}!`);
     return false;
   }
   return true;
