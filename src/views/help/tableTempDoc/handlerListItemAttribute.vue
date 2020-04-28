@@ -66,6 +66,13 @@
             optionalValue: "-",
             defaultValue: "-"
           },
+          {
+            param: "permission",
+            explain: "按钮权限，如sys:user:add",
+            type: "string",
+            optionalValue: "-",
+            defaultValue: "-"
+          },
         ],
       }
     },
