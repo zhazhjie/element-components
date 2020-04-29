@@ -18,6 +18,18 @@
         <el-button type="primary" @click="showColumns">显示表格3,4列</el-button>
         <el-button type="primary" @click="hideColumns">隐藏表格3,4列</el-button>
       </template>
+      <template v-slot:addressMultiHeader>
+        <el-table-column
+          prop="province"
+          label="省份"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="city"
+          label="市区"
+          width="120">
+        </el-table-column>
+      </template>
     </table-template>
   </section>
 </template>
@@ -33,13 +45,17 @@
             id: "1",
             username: "双击修改",
             phone: "13555555555",
-            state: 1
+            state: 1,
+            province:"123",
+            city:"456"
           },
           {
             id: "2",
             username: "铁柱",
             phone: "13666666666",
-            state: 0
+            state: 0,
+            province:"123",
+            city:"456"
           }
         ],
         config: {
@@ -118,6 +134,10 @@
                 }
               }
             },
+            {
+              label:"地址",
+              field:"address",
+            }
           ],
           handlerList: [
             {

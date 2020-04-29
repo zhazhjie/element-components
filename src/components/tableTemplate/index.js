@@ -979,7 +979,12 @@ export default {
                               return label;
                             });
                           }
-                        }}/>
+                        }}>
+                        {/*多级表头*/}
+                        {this.renderEl(column, {field: "multiHeader"}, {}, "MultiHeader", () => {
+                          return null;
+                        })}
+                      </el-table-column>
                     )
                   }
                 })
