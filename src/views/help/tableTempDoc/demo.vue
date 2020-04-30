@@ -23,6 +23,9 @@
           prop="province"
           label="省份"
           width="120">
+          <template v-slot:scope="scope">
+            <div>{{scope}}</div>
+          </template>
         </el-table-column>
         <el-table-column
           prop="city"
@@ -54,8 +57,8 @@
             username: "铁柱",
             phone: "13666666666",
             state: 0,
-            province:"123",
-            city:"456"
+            province:"789",
+            city:"2333"
           }
         ],
         config: {
