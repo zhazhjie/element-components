@@ -81,6 +81,10 @@
             explain: "自定义表头"
           },
           {
+            name: "字段名+MultiHeader",
+            explain: "自定义多级表头"
+          },
+          {
             name: "expand",
             explain: "会被渲染成为展开行的内容"
           },
