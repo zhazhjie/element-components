@@ -301,6 +301,20 @@ export default {
       this.$refs.form.resetFields();
     },
     /**
+     * 切换表格勾选状态
+     * @param rows
+     * @param selected
+     */
+    toggleSelection(rows, selected) {
+      if (rows) {
+        rows.forEach(row => {
+          this.$refs.table.toggleRowSelection(row, selected);
+        });
+      } else {
+        this.clearSelection();
+      }
+    },
+    /**
      * 清除表格勾选框
      */
     clearSelection() {

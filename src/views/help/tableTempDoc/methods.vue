@@ -74,6 +74,11 @@
             cb: "Function()",
           },
           {
+            method: "toggleSelection",
+            explain: "切换表格勾选状态",
+            cb: "Function(rows,selected)",
+          },
+          {
             method: "clearSelection",
             explain: "用于多选表格，清空用户的选择",
             cb: "Function()",
