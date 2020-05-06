@@ -17,6 +17,7 @@
       <template v-slot:add>
         <el-button type="primary" @click="showColumns">显示表格3,4列</el-button>
         <el-button type="primary" @click="hideColumns">隐藏表格3,4列</el-button>
+        <el-button type="primary" @click="toggleSelection([userList[0]])">切换第1行勾选</el-button>
       </template>
       <template v-slot:addressMultiHeader>
         <el-table-column
@@ -49,20 +50,20 @@
             username: "双击修改",
             phone: "13555555555",
             state: 1,
-            province:"123",
-            city:"456"
+            province: "123",
+            city: "456"
           },
           {
             id: "2",
             username: "铁柱",
             phone: "13666666666",
             state: 0,
-            province:"789",
-            city:"2333"
+            province: "789",
+            city: "2333"
           }
         ],
         config: {
-          selectable:true,
+          selectable: true,
           dialogProps: {width: '500px'},
           handlerProps: {width: '170px'},
           group: [{title: "分组1", columnIndexList: [1, 2]}, {title: "分组2", columnIndexList: [3]}],
@@ -138,8 +139,8 @@
               }
             },
             {
-              label:"地址",
-              field:"address",
+              label: "地址",
+              field: "address",
             }
           ],
           handlerList: [
@@ -174,11 +175,14 @@
       }
     },
     methods: {
+      toggleSelection(rows) {
+        this.$table.toggleSelection(rows);
+      },
       showColumns() {
-        this.$refs.table.showColumns([2, 3], "table");
+        this.$table.showColumns([2, 3], "table");
       },
       hideColumns() {
-        this.$refs.table.hideColumns([2, 3], "table");
+        this.$table.hideColumns([2, 3], "table");
       },
       handleSubmitAdd(row, hideLoading, done) {
         this.$message.success("提交新增");
