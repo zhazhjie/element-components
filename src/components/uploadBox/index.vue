@@ -21,11 +21,14 @@
       size: {
         type: Number,
         default: 5
+      },
+      uploadConfig: {
+        type: Object,
       }
     },
     data() {
       return {
-        config: this.$uploadConfig || {}
+        config: this.uploadConfig || this.$uploadConfig || {}
       }
     },
     methods: {
