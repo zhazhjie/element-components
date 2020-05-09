@@ -877,7 +877,7 @@ export default {
                   }
                 })
               }
-              <el-form-item ref="searchOpt" style="width:auto;margin-left:10px">
+              <el-form-item class="search-opt" ref="searchOpt">
                 <el-button type='primary' on-click={this.handleSearch}>查询</el-button>
                 {showReset && <el-button on-click={this.handleReset}>重置</el-button>}
                 {this.$scopedSlots.search && this.$scopedSlots.search()}

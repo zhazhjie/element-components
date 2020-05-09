@@ -57,6 +57,12 @@
   width: 250px;
 }
 
+.search-bar-form.el-form .search-opt {
+  display: inline-block;
+  width: auto;
+  margin-left: 10px;
+}
+
 .search-bar-form .el-form-item__content {
   flex: 1;
 }
