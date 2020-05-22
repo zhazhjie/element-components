@@ -113,11 +113,11 @@ export default {
   },
   data() {
     return {
-      defaultConfig: this.$tableConfig || {},
+      defaultConfig: this.$tableConfig || {},  // 全局注入的配置
       dialogTitle: "",
       dialogVisible: false,
       handleLoading: false,
-      handleType: 0,  //0新增，1编辑，2查看
+      handleType: 0,  // 0新增，1编辑，2查看
       curRow: {},
       searchForm: {},
       slideFlag: false,
@@ -137,7 +137,7 @@ export default {
     }
   },
   mounted() {
-    //给父组件注入$table
+    // 给父组件注入$table实例
     this.$parent.$table = this;
     this.getVisibleNum();
   },
@@ -259,9 +259,19 @@ export default {
     showAdd(dialogTitle = "新增") {
       this.handleEvent(null, dialogTitle, 0);
     },
+    /**
+     * 显示编辑弹出层
+     * @param row
+     * @param dialogTitle
+     */
     showEdit(row, dialogTitle = "编辑") {
       this.handleEvent(row, dialogTitle, 1);
     },
+    /**
+     * 显示查看弹出层
+     * @param row
+     * @param dialogTitle
+     */
     showView(row, dialogTitle = "查看") {
       this.handleEvent(row, dialogTitle, 2);
     },
@@ -335,21 +345,47 @@ export default {
         this.showEdit(row);
       }
     },
+    /**
+     * 点击搜索
+     */
     handleSearch() {
       this.emitEvent("submit-search", this.searchForm);
     },
+    /**
+     * 勾选的表格行改变时触发
+     * @param rows
+     */
     handleSelectionChange(rows) {
       this.emitEvent("selection-change", rows);
     },
+    /**
+     * 勾选表格行
+     * @param rows
+     * @param row
+     */
     handleSelect(rows, row) {
       this.emitEvent("select", rows, row);
     },
+    /**
+     * 勾选所有表格行
+     * @param rows
+     */
     handleSelectAll(rows) {
       this.emitEvent("select-all", rows);
     },
+    /**
+     * 点击表格行
+     * @param row
+     */
     handleRowClick(row) {
       this.emitEvent("row-click", row);
     },
+    /**
+     * 表单组件统一change事件入口
+     * @param scope
+     * @param row
+     * @param val
+     */
     handleFormElChange(scope, row, val) {
       let {change} = scope;
       if (change) change(val, row);
@@ -431,6 +467,7 @@ export default {
      */
     getVisibleNum() {
       let {collapsible = false, searchable = true} = this.config;
+      // 开启折叠时可用
       if (collapsible && searchable) {
         let margin = 10;
         let searchBar = this.$refs.searchBar.$el;
@@ -464,12 +501,16 @@ export default {
     renderEl(column, scope, row, suffix, customRender = null, disabled = false) {
       let {render} = scope;
       let scopedSlots = this.$scopedSlots[column.field + suffix];
+      // 优先自定义渲染函数
       if (render) {
         return render(row, disabled);
+        // 插槽次之
       } else if (scopedSlots) {
         return scopedSlots({row, disabled});
+        // 模版内自定义渲染，不对外暴露
       } else if (customRender) {
         return customRender(row);
+        // 默认
       } else {
         return this.createEl(column, scope || {}, row, suffix, disabled);
       }
@@ -487,6 +528,7 @@ export default {
       let {options = [], defaultProp = {value: "value", text: "text"}} = column;
       let {type, props = {}, attrs = {}} = scope;
       let data = {props, attrs};
+      // 当options异步获取时，用()=>([])
       if (toString(options) === "[object Function]") options = options();
       switch (type) {
         case "checkbox":
@@ -714,6 +756,12 @@ export default {
         )
       }
     },
+    /**
+     * 创建弹出层底部操作栏
+     * @param slot
+     * @param className
+     * @return {*}
+     */
     createDialogFooter(slot, className) {
       return (
         <div slot={slot} class={className}>
@@ -759,7 +807,12 @@ export default {
         </el-form>
       )
     },
-    getDisabled(column) {
+    /**
+     * 获取组件禁用状态
+     * @param column
+     * @return {boolean}
+     */
+    isDisabled(column) {
       let {disabledInAdd = false, disabledInEdit = false, disabledInView = true} = column;
       switch (true) {
         case this.handleLoading:
@@ -782,7 +835,7 @@ export default {
         return null;
       } else {
         let {props = {}, attrs = {}, append, span} = column.dialogFormItem || {};
-        let disabled = this.getDisabled(column);
+        let disabled = this.isDisabled(column);
         return (
           <el-col span={span}>
             <el-form-item
@@ -816,6 +869,7 @@ export default {
     }
   },
   render() {
+    // attrs：元素原生属性，props：组件的属性
     let {
       // mode = "dialog",
       columns = [],
