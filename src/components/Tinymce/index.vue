@@ -72,7 +72,7 @@
       },
       selectImg(imgList) {
         imgList.forEach(v => {
-          this.tinymce(this.getImg(v));
+          this.tinymce.insertContent(this.getImg(v));
         })
       },
       getImg(url) {
