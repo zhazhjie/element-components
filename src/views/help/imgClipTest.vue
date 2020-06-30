@@ -3,7 +3,6 @@
     <input type="file" @change="handleChange">
     <img :src="imgData" alt="">
     <img-clip :width="500" :height="300" :img="imgData" :show-flag.sync="imgClipFlag" @submitClip="e=>imgData=e"></img-clip>
-    <upload-box ></upload-box>
   </section>
 </template>
 
