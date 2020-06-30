@@ -13,6 +13,7 @@
   "dependencies": {
     "core-js": "^2.6.5",
     "element-ui": "^2.12.0",
+    "js-utils": "git+http://git.tigoyun.com/zzhijie/js-utils.git",
     "vue": "^2.6.10",
     "vue-router": "^3.1.6",
     "vuex": "^3.1.3"

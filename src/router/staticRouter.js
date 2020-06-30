@@ -20,12 +20,12 @@ export default [
     },
     component: (resolve) => require(['@/views/help/richText'], resolve),
   },
-  // {
-  //   path: '/help/excel',
-  //   meta: {
-  //     icon: "icon-swap",
-  //     name: '导入导出excel'
-  //   },
-  //   component: (resolve) => require(['@/views/help/excel'], resolve),
-  // },
+  {
+    path: '/help/imgClipTest',
+    meta: {
+      icon: "icon-swap",
+      name: '图片裁切'
+    },
+    component: (resolve) => require(['@/views/help/imgClipTest'], resolve),
+  },
 ]

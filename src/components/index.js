@@ -8,6 +8,7 @@ import tableTemplate from './tableTemplate';
 import tinymce from './Tinymce';
 import uploadBox from './uploadBox';
 import permissionBtn from './permissionBtn';
+import imgClip from './imgClip';
 
 const plugin = Object.create(null);
 plugin.install = function (Vue, options) {
@@ -20,5 +21,6 @@ plugin.install = function (Vue, options) {
   Vue.component(tinymce.name, tinymce);
   Vue.component(uploadBox.name, uploadBox);
   Vue.component(permissionBtn.name, permissionBtn);
+  Vue.component(imgClip.name, imgClip);
 };
 export default plugin;
