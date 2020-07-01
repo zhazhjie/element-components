@@ -82,7 +82,6 @@
         }
       },
       pointTouchDown (name, e) {
-      	console.log(e.pageX, e.pageY)
         this.initAction(name, e.pageX, e.pageY);
         e.stopPropagation();
       },

@@ -1,30 +1,35 @@
 <template>
-	<section>
+  <section>
     <input type="file" @change="handleChange">
-    <img :src="imgData" alt="">
-    <img-clip :width="500" :height="300" :img="imgData" :show-flag.sync="imgClipFlag" @submitClip="e=>imgData=e"></img-clip>
+    <div>
+      <img :src="img">
+    </div>
+    <img-clip :width="640" :height="360" :img="imgData" :show-flag.sync="imgClipFlag"
+              @submitClip="e=>img=e"></img-clip>
   </section>
 </template>
 
 <script>
-  import {fileToDataURL} from "js-utils"
+	import {fileToDataURL} from "js-utils"
+
 	export default {
 		name: "imgClipTest",
 		data() {
 			return {
-				imgData:"",
-				imgClipFlag:false,
-      }
+				imgData: "",
+				imgClipFlag: false,
+        img:""
+			}
 		},
 		methods: {
-			handleChange(e){
+			handleChange(e) {
 				let file = e.target.files[0];
-				fileToDataURL(file).then(data=>{
-					this.imgData=data;
-					this.imgClipFlag=true;
-        })
-      }
-    },
+				fileToDataURL(file).then(data => {
+					this.imgData = data;
+					this.imgClipFlag = true;
+				})
+			}
+		},
 		mounted() {
 		}
 	}
