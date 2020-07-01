@@ -1,9 +1,16 @@
 <template>
   <section class="img-clip" @mousedown="wrapTouchDown" @mousemove="updateRec" @mouseup="disableDrag" v-show="showFlag">
-    <el-dialog width="800px" title="图片裁剪" :visible.sync="showFlag" @opened="handleOpen" :close-on-click-modal="false">
+    <el-dialog width="800px" title="图片裁切" :visible.sync="showFlag" @opened="handleOpen" :close-on-click-modal="false">
       <!--    <div class="modal-title">-->
       <!--      <span>图片剪切</span>-->
       <!--    </div>-->
+      <div>
+        <el-input-number :controls="false" :precision="0" :min="100" v-model="width"
+                         style="margin-right: 20px"></el-input-number>
+        <el-input-number :controls="false" :precision="0" :min="100" v-model="height"
+                         style="margin-right: 20px"></el-input-number>
+        <el-button type="primary" @click="handleReLoad">修改裁切尺寸</el-button>
+      </div>
       <div class="modal">
         <div class="modal-content">
           <div class="img-clip-wrap">
@@ -87,7 +94,6 @@
 			},
 			submitClip() {
 				this.clip();
-				// console.log(this.clipData);
 				this.$emit('submitClip', this.clipData);
 				this.cancelClip();
 			},
@@ -105,15 +111,13 @@
 			},
 			setImgSize() {
 				// image's naturalWidth naturalHeight ratio;
-        this.blockQueue.clear();
+				this.blockQueue.clear();
 				this.nw = this.$srcImg.naturalWidth;
 				this.nh = this.$srcImg.naturalHeight;
 				const nr = this.nw / this.nh;
 				const scw = this.$containerBox.offsetWidth;
 				const sch = this.$containerBox.offsetHeight;
 				const sr = scw / sch;
-				let rw = 0;  // select box width
-				let rh = 0;  // select box height
 				if (nr >= sr) {
 					this.imgSize.w = scw;
 					this.imgSize.h = scw / nr;
@@ -123,17 +127,10 @@
 					this.imgSize.w = sch * nr;
 					this.containerTop = 0;
 				}
-				if (this.nw >= this.nh) {
-					rh = this.imgSize.h;
-					rw = rh * this.ratio;
-				} else {
-					rw = this.imgSize.w;
-					rh = rw / this.ratio;
-				}
+				this.setBoxSize();
 				this.$srcImg.setAttribute('style', `width:${this.imgSize.w}px;height:${this.imgSize.h}px;`);
 				this.$imgContainer.setAttribute('style',
 						`width:${this.imgSize.w}px;height:${this.imgSize.h}px;top:${this.containerTop}px;`);
-				this.$refs.box.rec = {w: rw, h: rh, l: 0, t: 0};
 			},
 			getComputedRec(r) {
 				const cw = this.$imgContainer.offsetWidth;
@@ -162,7 +159,6 @@
 				bfx.drawImage(this.$srcImg, computedRec.l, computedRec.t, computedRec.w, computedRec.h, 0, 0, width, height);
 				//bfx.drawImage(this.$srcImg, -computedRec.l, -computedRec.t, this.nw, this.nh);
 				this.clipData = bufferCanvas.toDataURL();
-				//console.log(this.nw, this.nh);
 			},
 			handleOpen() {
 				this.$input = this.$el.querySelectorAll('#file_input')[0];
@@ -172,6 +168,33 @@
 				this.$preContainer = this.$el.querySelectorAll('.pre-container')[0];
 				this.$containerBox = this.$el.querySelectorAll('.container-bg')[0];
 				this.blockQueue.run();
+			},
+			setBoxSize() {
+				this.ratio = this.width / this.height;
+				const nr = this.nw / this.nh;
+				let rw = 0;  // select box width
+				let rh = 0;  // select box height
+				if (this.nw >= this.nh) {
+					if (nr >= this.ratio) {
+						rh = this.imgSize.h;
+						rw = rh * this.ratio;
+					} else {
+						rw = this.imgSize.w;
+						rh = rw / this.ratio;
+					}
+				} else {
+					if (nr >= this.ratio) {
+						rh = this.imgSize.h;
+						rw = rh * this.ratio;
+					} else {
+						rw = this.imgSize.w;
+						rh = rw / this.ratio;
+					}
+				}
+				this.$refs.box.rec = {w: rw, h: rh, l: 0, t: 0};
+			},
+			handleReLoad() {
+				this.setBoxSize();
 			}
 		},
 		mounted() {

@@ -250,7 +250,9 @@
         }
       }
     },
-  }
+    mounted() {
+		}
+	}
 </script>
 
 <style scoped>
