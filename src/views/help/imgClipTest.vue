@@ -4,7 +4,7 @@
     <div>
       <img :src="img">
     </div>
-    <img-clip :width="750" :height="500" :img="imgData" :show-flag.sync="imgClipFlag"
+    <img-clip :width="750" :height="500" :auto-size-flag="true" :img="imgData" :show-flag.sync="imgClipFlag"
               @submitClip="e=>img=e"></img-clip>
   </section>
 </template>

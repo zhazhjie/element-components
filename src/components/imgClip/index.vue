@@ -4,7 +4,7 @@
       <!--    <div class="modal-title">-->
       <!--      <span>图片剪切</span>-->
       <!--    </div>-->
-      <div>
+      <div v-if="autoSizeFlag">
         <el-input-number :controls="false" :precision="0" :min="100" v-model="width"
                          style="margin-right: 20px"></el-input-number>
         <el-input-number :controls="false" :precision="0" :min="100" v-model="height"
@@ -39,6 +39,10 @@
 	export default {
 		name: "img-clip",
 		props: {
+			autoSizeFlag:{
+				type: Boolean,
+				default: false
+      },
 			img: {
 				type: String,
 				required: true,
