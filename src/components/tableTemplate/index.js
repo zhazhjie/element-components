@@ -310,6 +310,9 @@ export default {
     resetForm() {
       this.$refs.form.resetFields();
     },
+    resetSearch(){
+      this.handleReset();
+    },
     /**
      * 切换表格勾选状态
      * @param rows
