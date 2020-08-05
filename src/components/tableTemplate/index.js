@@ -407,7 +407,9 @@ export default {
     resetSearchForm() {
       let searchForm = {};
       this.config.columns.forEach(column => {
-        searchForm[column.field] = column.searchValue || null;
+        if (!column.hideInSearch) {
+          searchForm[column.field] = column.searchValue || null;
+        }
       });
       this.searchForm = searchForm;
     },
