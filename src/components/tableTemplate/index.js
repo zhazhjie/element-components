@@ -139,6 +139,7 @@ export default {
   mounted() {
     // 给父组件注入$table实例
     this.$parent.$table = this;
+    this.resetSearchForm();
     this.getVisibleNum();
   },
   methods: {
@@ -310,7 +311,7 @@ export default {
     resetForm() {
       this.$refs.form.resetFields();
     },
-    resetSearch(){
+    resetSearch() {
       this.handleReset();
     },
     /**
@@ -397,10 +398,18 @@ export default {
      * 重置搜索栏字段
      */
     handleReset() {
-      for (let key in this.searchForm) {
-        this.searchForm[key] = null;
-      }
+      this.resetSearchForm();
       this.emitEvent("search-reset");
+    },
+    /**
+     * 重置搜索栏字段
+     */
+    resetSearchForm() {
+      let searchForm = {};
+      this.config.columns.forEach(column => {
+        searchForm[column.field] = column.searchValue || null;
+      });
+      this.searchForm = searchForm;
     },
     /**
      * 双击编辑表格字段
