@@ -16,7 +16,7 @@
   import {checkImg} from "../utils";
 
   export default {
-    name: "uploadBox",
+    name: "upload-box",
     props: {
       size: {
         type: Number,

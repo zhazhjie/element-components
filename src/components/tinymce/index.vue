@@ -10,7 +10,7 @@
 <script>
   import plugins from './plugins'
   import toolbar from './toolbar'
-  import UploadImg from "./uploadImg";
+  import UploadImg from "./upload-img";
   import {checkImg} from "../utils";
 
   export default {

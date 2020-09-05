@@ -14,6 +14,7 @@
 
 <script>
   export default {
+    name: "select-box",
     props: {
       ratio: {},
       img: {},

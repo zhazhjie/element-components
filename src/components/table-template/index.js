@@ -8,7 +8,7 @@
  */
 import "./style.css";
 
-// import tinymce from "../Tinymce"
+// import tinymce from "../tinymce"
 
 /**
  * @typedef {Object} Column

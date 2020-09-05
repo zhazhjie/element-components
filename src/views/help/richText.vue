@@ -21,7 +21,7 @@
       }
     },
     components: {
-      tinymce: (resolve) => require(['@/components/Tinymce'], resolve),
+      tinymce: (resolve) => require(['@/components/tinymce'], resolve),
     },
     methods: {
       submit() {

@@ -16,10 +16,10 @@
 </template>
 
 <script>
-  import UploadBox from "../uploadBox";
+  import UploadBox from "../upload-box";
 
   export default {
-    name: "uploadImg",
+    name: "upload-img",
     components: {UploadBox},
     props: {
       visible: {

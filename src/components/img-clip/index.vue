@@ -33,7 +33,7 @@
 </template>
 
 <script>
-	import selectBox from './selectBox.vue'
+	import SelectBox from './select-box.vue'
 	import {BlockQueue} from 'js-utils/blockQueue'
 
 	export default {
@@ -61,7 +61,7 @@
 			},
 		},
 		components: {
-			selectBox
+			SelectBox
 		},
 		data() {
 			return {
