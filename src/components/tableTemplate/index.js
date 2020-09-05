@@ -1101,7 +1101,7 @@ export default {
           {/*分页*/}
           {pageable &&
           <el-pagination
-            style='margin-top:20px;text-align:right'
+            style='margin:20px 0;text-align:right'
             on-size-change={this.handleSizeChange}
             on-current-change={this.handleCurrentChange}
             current-page={+this.page.currentPage}
