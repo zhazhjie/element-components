@@ -21,5 +21,8 @@
     "@vue/cli-plugin-babel": "^3.11.0",
     "@vue/cli-service": "^3.11.0",
     "vue-template-compiler": "^2.6.10"
-  }
+  },
+  "_from": "element-components@git+http://git.tigoyun.com/zzhijie/element-components.git",
+  "_resolved": "http://git.tigoyun.com/zzhijie/element-components.git#e728ee7c511deb9affe01df35d45bda240e32c00",
+  "__npminstall_done": "Sat Sep 05 2020 17:32:21 GMT+0800 (中国标准时间)"
 }
