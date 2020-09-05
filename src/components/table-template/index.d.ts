@@ -5,16 +5,16 @@ interface $table {
   curRow: Object;
 
   /**
-   * 显示字段
-   * @param columnIndexList
-   * @param type
+   * 显示列
+   * @param columnIndexList 列索引
+   * @param type 类型
    */
   showColumns(columnIndexList: Array<number>, type: "table" | "dialog" | "search"): void;
 
   /**
-   * 隐藏字段
-   * @param columnIndexList
-   * @param type
+   * 隐藏列
+   * @param columnIndexList 列索引
+   * @param type 类型
    */
   hideColumns(columnIndexList: Array<number>, type: "table" | "dialog" | "search"): void;
 
