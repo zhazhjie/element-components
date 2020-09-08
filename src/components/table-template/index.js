@@ -111,9 +111,19 @@ export default {
   components: {
     // tinymce
   },
+  computed: {
+    /**
+     * 分页默认字段
+     * @returns {{current: string, total: string, size: string, sizes: string}}
+     */
+    pageProp() {
+      let {current = "currentPage", size = "pageSize", total = "total", sizes = "sizes"} = this.config.pageProp || this.globalConfig.pageProp || {};
+      return {current, size, total, sizes};
+    }
+  },
   data() {
     return {
-      defaultConfig: this.$tableConfig || {},  // 全局注入的配置
+      globalConfig: this.$tableConfig || {},  // 全局注入的配置
       dialogTitle: "",
       dialogVisible: false,
       handleLoading: false,
@@ -193,7 +203,7 @@ export default {
      * @param pageSize
      */
     handleSizeChange(pageSize) {
-      this.page.pageSize = pageSize;
+      this.page[this.pageProp.size] = pageSize;
       this.emitEvent("page-change");
     },
     /**
@@ -201,7 +211,7 @@ export default {
      * @param curPage
      */
     handleCurrentChange(curPage) {
-      this.page.currentPage = curPage;
+      this.page[this.pageProp.current] = curPage;
       this.emitEvent("page-change");
     },
     /**
@@ -472,7 +482,7 @@ export default {
       if (!permission) {
         return true;
       } else {
-        let {permissions = this.defaultConfig.permissions || []} = this.config;
+        let {permissions = this.globalConfig.permissions || []} = this.config;
         return permissions.some(perms => perms === permission)
       }
     },
@@ -916,6 +926,7 @@ export default {
     } = this.config;
     let handlerListSlots = this.$scopedSlots.handlerList;
     let searchColumns = columns.filter(v => !v.hideInSearch);
+    let {current, size, total, sizes} = this.pageProp;
     return (
       <section class="table-template">
         {!withoutTable && <div>
@@ -1115,10 +1126,10 @@ export default {
             style='margin:20px 0;text-align:right'
             on-size-change={this.handleSizeChange}
             on-current-change={this.handleCurrentChange}
-            current-page={+this.page.currentPage}
-            page-sizes={this.page.sizes}
-            page-size={+this.page.pageSize}
-            total={+this.page.total}
+            current-page={+this.page[current]}
+            page-sizes={this.page[sizes]}
+            page-size={+this.page[size]}
+            total={+this.page[total]}
             layout="total, sizes, prev, pager, next, jumper"/>
           }
         </div>}
