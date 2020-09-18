@@ -549,7 +549,7 @@ export default {
      * @returns {*} 返回一个组件
      */
     createEl(column = {}, scope = {}, row = {}, suffix, disabled = false) {
-      let {options = [], defaultProp = {value: "value", text: "text"}} = column;
+      let {options = [], defaultProp = {value: "value", text: "text"}, field, label} = column;
       let {type, props = {}, attrs = {}} = scope;
       let data = {props, attrs};
       // 当options异步获取时，用()=>([])
@@ -562,7 +562,7 @@ export default {
                 on-change={this.handleFormElChange.bind(this, scope, row)}
                 {...data}
                 disabled={disabled}
-                vModel={row[column.field]}>
+                vModel={row[field]}>
                 {this.renderEl(column, scope[type] || {}, options[0], suffix + toCapitalize(type), () => getItemVal(options[0], defaultProp.text))}
               </el-checkbox>
             );
@@ -571,7 +571,7 @@ export default {
               <el-checkbox-group
                 on-change={this.handleFormElChange.bind(this, scope, row)}
                 disabled={disabled}
-                vModel={row[column.field]}>
+                vModel={row[field]}>
                 {options.map(item => {
                   return (
                     <el-checkbox
@@ -589,7 +589,7 @@ export default {
             <el-radio-group
               on-change={this.handleFormElChange.bind(this, scope, row)}
               disabled={disabled}
-              vModel={row[column.field]}>
+              vModel={row[field]}>
               {options.map(item => {
                 return (
                   <el-radio
@@ -605,10 +605,10 @@ export default {
           return (
             <el-select
               on-change={this.handleFormElChange.bind(this, scope, row)}
-              placeholder={"请选择" + column.label}
+              placeholder={"请选择" + label}
               {...data}
               disabled={disabled}
-              vModel={row[column.field]}>
+              vModel={row[field]}>
               {options.map(item => {
                 return (
                   <el-option
@@ -627,26 +627,28 @@ export default {
               on-change={this.handleFormElChange.bind(this, scope, row)}
               {...data}
               disabled={disabled}
-              vModel={row[column.field]}>
+              vModel={row[field]}>
             </el-switch>
           );
         case "tag":
-          let field = row[column.field];
-          let option = (column.options || []).find(item => getItemVal(item, defaultProp.value) === field) || {};
+          let fieldVal = row[field];
+          let option = (column.options || []).find(item => getItemVal(item, defaultProp.value) === fieldVal) || {};
+          //typeMapping 兼容旧版本
+          let {tagMapping = {}, typeMapping = {}} = column;
+          let tagType = tagMapping[fieldVal] || typeMapping[fieldVal];
           return (
-            <el-tag
-              type={column.typeMapping && column.typeMapping[field]}>{getItemVal(option, defaultProp.text)}</el-tag>
+            <el-tag type={tagType}>{getItemVal(option, defaultProp.text)}</el-tag>
           );
         case "date-picker":
           return (
             <el-date-picker
               on-change={this.handleFormElChange.bind(this, scope, row)}
-              placeholder={"请选择" + column.label}
+              placeholder={"请选择" + label}
               start-placeholder="开始时间"
               end-placeholder="结束时间"
               {...data}
               disabled={disabled}
-              vModel={row[column.field]}
+              vModel={row[field]}
             >
             </el-date-picker>
           );
@@ -654,20 +656,20 @@ export default {
           return (
             <el-time-picker
               on-change={this.handleFormElChange.bind(this, scope, row)}
-              placeholder={"请选择" + column.label}
+              placeholder={"请选择" + label}
               {...data}
               disabled={disabled}
-              vModel={row[column.field]}>
+              vModel={row[field]}>
             </el-time-picker>
           );
         case "time-select":
           return (
             <el-time-select
               on-change={this.handleFormElChange.bind(this, scope, row)}
-              placeholder={"请选择" + column.label}
+              placeholder={"请选择" + label}
               {...data}
               disabled={disabled}
-              vModel={row[column.field]}>
+              vModel={row[field]}>
             </el-time-select>
           );
         case "input-number":
@@ -675,7 +677,7 @@ export default {
             <el-input-number
               {...data}
               disabled={disabled}
-              vModel={row[column.field]}>
+              vModel={row[field]}>
             </el-input-number>
           );
         case "slider":
@@ -684,7 +686,7 @@ export default {
               on-change={this.handleFormElChange.bind(this, scope, row)}
               {...data}
               disabled={disabled}
-              vModel={row[column.field]}>
+              vModel={row[field]}>
             </el-slider>
           );
         case "rate":
@@ -693,7 +695,7 @@ export default {
               on-change={this.handleFormElChange.bind(this, scope, row)}
               {...data}
               disabled={disabled}
-              vModel={row[column.field]}>
+              vModel={row[field]}>
             </el-rate>
           );
         case "color-picker":
@@ -702,18 +704,18 @@ export default {
               on-change={this.handleFormElChange.bind(this, scope, row)}
               {...data}
               disabled={disabled}
-              vModel={row[column.field]}>
+              vModel={row[field]}>
             </el-color-picker>
           );
         case "cascader":
           return (
             <el-cascader
               on-change={this.handleFormElChange.bind(this, scope, row)}
-              placeholder={"请选择" + column.label}
+              placeholder={"请选择" + label}
               {...data}
               options={options}
               disabled={disabled}
-              vModel={row[column.field]}>
+              vModel={row[field]}>
             </el-cascader>
           );
         case "upload":
@@ -737,10 +739,12 @@ export default {
         default:
           return (
             <el-input
-              placeholder={"请输入" + column.label}
+              placeholder={"请输入" + label}
               {...data}
               disabled={disabled}
-              vModel={row[column.field]}/>
+              on-change={suffix === "Search" ? this.handleSearch : null}
+              vModel={row[field]}>
+            </el-input>
           );
       }
     },
@@ -748,9 +752,11 @@ export default {
      * 创建弹出层
      */
     createDialog() {
-      let {mode = "dialog", dialogProps = {}, dialogAttrs = {}, dialogFormRender, dialogFooterRender} = this.config;
+      let {mode = "dialog", dialogProps = {}, dialogAttrs = {}, dialogFormRender, dialogFooterRender, onlyRenderForm} = this.config;
       let formColumn = {field: "dialogForm", render: dialogFormRender};
       let footerColumn = {field: "dialogFooter", render: dialogFooterRender};
+      let form = this.renderEl(formColumn, formColumn, this.curRow, "", this.createForm);
+      if (onlyRenderForm) return form;
       if (mode === "dialog") {
         return (
           <el-dialog
@@ -761,7 +767,7 @@ export default {
             close-on-click-modal={false}
             props={dialogProps}
             attrs={dialogAttrs}>
-            {this.renderEl(formColumn, formColumn, this.curRow, "", this.createForm)}
+            {form}
             {this.renderEl(footerColumn, footerColumn, this.curRow, "", () => this.createDialogFooter("footer"))}
           </el-dialog>
         )
@@ -774,7 +780,7 @@ export default {
             close-on-click-modal={false}
             props={dialogProps}
             attrs={dialogAttrs}>
-            {this.renderEl(formColumn, formColumn, this.curRow, "", this.createForm)}
+            {form}
             {this.renderEl(footerColumn, footerColumn, this.curRow, "", () => this.createDialogFooter(null, "el-drawer-footer"))}
           </el-drawer>
         )
@@ -922,14 +928,15 @@ export default {
       showIndex = false,
       addPermission = "",
       selectionProps = {},
-      selectionAttrs = {}
+      selectionAttrs = {},
+      onlyRenderForm
     } = this.config;
     let handlerListSlots = this.$scopedSlots.handlerList;
     let searchColumns = columns.filter(v => !v.hideInSearch);
     let {current, size, total, sizes} = this.pageProp;
     return (
       <section class="table-template">
-        {!withoutTable && <div>
+        {!withoutTable && !onlyRenderForm && <div>
           {/*搜索栏*/}
           {searchable &&
           <div class="search-bar-wrapper">
