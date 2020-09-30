@@ -632,7 +632,7 @@ export default {
           );
         case "tag":
           let fieldVal = row[field];
-          let option = (column.options || []).find(item => getItemVal(item, defaultProp.value) === fieldVal) || {};
+          let option = (options || []).find(item => getItemVal(item, defaultProp.value) === fieldVal) || {};
           //typeMapping 兼容旧版本
           let {tagMapping = {}, typeMapping = {}} = column;
           let tagType = tagMapping[fieldVal] || typeMapping[fieldVal];
