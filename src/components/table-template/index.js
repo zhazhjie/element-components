@@ -742,7 +742,7 @@ export default {
               placeholder={"请输入" + label}
               {...data}
               disabled={disabled}
-              on-change={suffix === "Search" ? this.handleSearch : null}
+              on-change={this.handleFormElChange.bind(this, scope, row)}
               vModel={row[field]}>
             </el-input>
           );
