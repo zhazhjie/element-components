@@ -418,7 +418,7 @@ export default {
       let searchForm = {};
       this.config.columns.forEach(column => {
         if (!column.hideInSearch) {
-          searchForm[column.field] = column.searchValue || null;
+          searchForm[column.field] = column.searchValue;
         }
       });
       this.searchForm = searchForm;
