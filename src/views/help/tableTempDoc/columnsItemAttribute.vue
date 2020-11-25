@@ -54,7 +54,14 @@
           },
           {
             param: "value",
-            explain: "表单字段的默认值",
+            explain: "弹出层表单字段的默认值",
+            type: "any",
+            optionalValue: "-",
+            defaultValue: "-"
+          },
+          {
+            param: "searchValue",
+            explain: "搜索栏表单字段的默认值",
             type: "any",
             optionalValue: "-",
             defaultValue: "-"
