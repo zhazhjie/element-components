@@ -743,9 +743,9 @@ export default {
           return (
             <el-input
               placeholder={"请输入" + label}
+              on-change={this.handleFormElChange.bind(this, scope, row)}
               {...data}
               disabled={disabled}
-              on-change={this.handleFormElChange.bind(this, scope, row)}
               vModel={row[field]}>
             </el-input>
           );
@@ -1000,15 +1000,15 @@ export default {
               ref="table"
               class="table"
               v-loading={this.tableLoading}
+              on-selection-change={this.handleSelectionChange}
+              on-row-click={this.handleRowClick}
+              on-select={this.handleSelect}
+              on-select-all={this.handleSelectAll}
               data={this.data}
               props={tableProps}
               attrs={tableAttrs}
               on={tableEvents}
               border
-              on-selection-change={this.handleSelectionChange}
-              on-row-click={this.handleRowClick}
-              on-select={this.handleSelect}
-              on-select-all={this.handleSelectAll}
             >
               {/*表格勾选框*/}
               {selectable &&
