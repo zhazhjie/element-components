@@ -412,7 +412,7 @@ export default {
      */
     handleReset() {
       this.resetSearchForm();
-      this.emitEvent("search-reset");
+      this.emitEvent("search-reset", this.searchForm);
     },
     /**
      * 重置搜索栏字段
