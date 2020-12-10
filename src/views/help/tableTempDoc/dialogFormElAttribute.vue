@@ -33,6 +33,13 @@
             defaultValue: "-"
           },
           {
+            param: "on",
+            explain: "表单组件事件，只支持-写法，如active-change",
+            type: "object",
+            optionalValue: "-",
+            defaultValue: "-"
+          },
+          {
             param: "props",
             explain: "表单组件属性，支持对应组件的所有属性",
             type: "object",

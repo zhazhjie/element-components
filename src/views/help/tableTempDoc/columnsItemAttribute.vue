@@ -88,6 +88,13 @@
             defaultValue: "-"
           },
           {
+            param: "on",
+            explain: "表格列中的表单组件事件，只支持-写法，如active-change",
+            type: "object",
+            optionalValue: "-",
+            defaultValue: "-"
+          },
+          {
             param: "props",
             explain: "表格列属性，支持el-table-column所有属性",
             type: "object",

@@ -119,6 +119,9 @@ export default {
     pageProp() {
       let {current = "currentPage", size = "pageSize", total = "total", sizes = "sizes"} = this.config.pageProp || this.globalConfig.pageProp || {};
       return {current, size, total, sizes};
+    },
+    table() {
+      return this.$refs.table;
     }
   },
   data() {
@@ -550,8 +553,8 @@ export default {
      */
     createEl(column = {}, scope = {}, row = {}, suffix, disabled = false) {
       let {options = [], defaultProp = {value: "value", text: "text"}, field, label} = column;
-      let {type, props = {}, attrs = {}} = scope;
-      let data = {props, attrs};
+      let {type, props = {}, attrs = {}, on = {}} = scope;
+      let data = {props, attrs, on};
       // 当options异步获取时，用()=>([])
       if (toString(options) === "[object Function]") options = options();
       switch (type) {
@@ -907,6 +910,7 @@ export default {
       // rules = {},
       tableProps = {},
       tableAttrs = {},
+      tableEvents = {},
       handlerProps = {},
       handlerAttrs = {},
       // dialogProps = {},
@@ -999,6 +1003,7 @@ export default {
               data={this.data}
               props={tableProps}
               attrs={tableAttrs}
+              on={tableEvents}
               border
               on-selection-change={this.handleSelectionChange}
               on-row-click={this.handleRowClick}

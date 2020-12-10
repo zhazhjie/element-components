@@ -46,6 +46,13 @@
             defaultValue: "-"
           },
           {
+            param: "tableEvents",
+            explain: "表格事件，只支持-写法，如current-change",
+            type: "object",
+            optionalValue: "-",
+            defaultValue: "-"
+          },
+          {
             param: "tableProps",
             explain: "表格属性，支持el-table所有属性",
             type: "object",
