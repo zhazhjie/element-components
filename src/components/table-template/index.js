@@ -813,6 +813,7 @@ export default {
       let dialogColumns = group.length ? group : columns;
       return (
         <el-form
+          on-native-submit={() => false}
           label-width="80px"
           props={{
             model: this.curRow,
@@ -945,6 +946,7 @@ export default {
           {searchable &&
           <div class="search-bar-wrapper">
             <el-form
+              on-native-submit={() => false}
               ref="searchBar"
               class="search-bar-form"
               inline={true}
