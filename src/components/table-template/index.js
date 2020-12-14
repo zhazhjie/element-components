@@ -813,7 +813,7 @@ export default {
       let dialogColumns = group.length ? group : columns;
       return (
         <el-form
-          on-native-submit={() => false}
+          nativeOnSubmit={this.stopFormSubmit}
           label-width="80px"
           props={{
             model: this.curRow,
@@ -900,6 +900,12 @@ export default {
           return value === row.state;
         };
       }
+    },
+    /**
+     * 阻止表单默认提交
+     */
+    stopFormSubmit(e) {
+      e.preventDefault();
     }
   },
   render() {
@@ -946,7 +952,7 @@ export default {
           {searchable &&
           <div class="search-bar-wrapper">
             <el-form
-              on-native-submit={() => false}
+              nativeOnSubmit={this.stopFormSubmit}
               ref="searchBar"
               class="search-bar-form"
               inline={true}
