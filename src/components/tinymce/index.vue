@@ -142,7 +142,8 @@
               editor.setContent(this.value);
               this.initFlag = true;
             }
-            editor.on('Change', () => {
+            editor.on('input change undo redo', () => {
+              this.initFlag = true;
               this.$emit('input', editor.getContent());
             })
           },
