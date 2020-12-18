@@ -115,13 +115,18 @@
 
 .table-template .edit-box .clickable {
   display: inline-block;
-  cursor: pointer;
   min-width: 30px;
   min-height: 20px;
 }
 
-.table-template .edit-box input {
-  text-align: center;
+.table-template .edit-box .clickable .el-icon-edit {
+  margin-left: 5px;
+  display: none;
+  cursor: pointer;
+}
+
+.table-template .edit-box:hover .el-icon-edit {
+  display: inline-block;
 }
 
 .table-template .el-table__header th {

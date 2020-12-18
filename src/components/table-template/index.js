@@ -1064,7 +1064,7 @@ export default {
                               // 表格字段双击可编辑
                               if (editable) {
                                 return (
-                                  <span class="edit-box">
+                                  <div class="edit-box">
                                     {curField && curField.editing ?
                                       <el-input
                                         vFocus
@@ -1074,10 +1074,11 @@ export default {
                                       :
                                       <span
                                         class="clickable"
-                                        ondblclick={this.handleFieldClick.bind(this, fieldKey, fieldVal)}
-                                        attrs={attrs}>{format ? format(fieldVal) : fieldVal}</span>
+                                        attrs={attrs}>{format ? format(fieldVal) : fieldVal}
+                                        <i on-click={this.handleFieldClick.bind(this, fieldKey, fieldVal)} class="el-icon-edit"></i>
+                                      </span>
                                     }
-                                  </span>
+                                  </div>
                                 )
                               } else {
                                 return (
