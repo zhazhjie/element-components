@@ -24,6 +24,10 @@
       },
       uploadConfig: {
         type: Object,
+      },
+      type: {
+        type: String,
+        default: "jpeg|jpg|png"
       }
     },
     data() {
@@ -36,7 +40,7 @@
         this.$message.error('图片上传失败');
       },
       beforeUpload(file) {
-        return checkImg(file, this.config.size || this.size);
+        return checkImg(file, this.config.size || this.size, this.type);
       }
     },
     mounted() {
