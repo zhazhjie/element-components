@@ -1,11 +1,13 @@
 <template>
   <el-upload
     ref="upload"
+    v-loading="loading"
     v-bind="$attrs"
     :action="config.action"
     :headers="config.headers"
     :on-error="handleError"
-    :before-upload="beforeUpload">
+    :on-success="handleSuccess"
+    :before-upload="handleBeforeUpload">
     <slot></slot>
     <slot name="tip" slot="tip"></slot>
   </el-upload>
@@ -13,39 +15,64 @@
 
 <script>
 
-  import {checkImg} from "../utils";
+import {checkImg} from "../utils";
 
-  export default {
-    name: "upload-box",
-    props: {
-      size: {
-        type: Number,
-        default: 5
-      },
-      uploadConfig: {
-        type: Object,
-      },
-      type: {
-        type: String,
-        default: "jpeg|jpg|png"
+export default {
+  name: "upload-box",
+  props: {
+    size: {
+      type: Number,
+      default: 5
+    },
+    uploadConfig: {
+      type: Object,
+    },
+    type: {
+      type: String,
+      default: "jpeg|jpg|png"
+    },
+    onError: {
+      type: Function,
+    },
+    beforeUpload: {
+      type: Function
+    },
+    onSuccess: {
+      type: Function
+    }
+  },
+  data() {
+    return {
+      loading: false,
+      config: this.uploadConfig || this.$uploadConfig || {}
+    }
+  },
+  methods: {
+    handleSuccess(e) {
+      this.loading = false;
+      if (this.onSuccess) {
+        this.onSuccess(e);
       }
     },
-    data() {
-      return {
-        config: this.uploadConfig || this.$uploadConfig || {}
+    handleError(e) {
+      this.$message.error('图片上传失败');
+      this.loading = false;
+      if (this.onError) {
+        this.onError(e);
       }
     },
-    methods: {
-      handleError() {
-        this.$message.error('图片上传失败');
-      },
-      beforeUpload(file) {
+    handleBeforeUpload(file) {
+      this.loading = true;
+      if (this.beforeUpload) {
+        return this.beforeUpload(file);
+      } else {
         return checkImg(file, this.config.size || this.size, this.type);
       }
-    },
-    mounted() {
     }
+  },
+  mounted() {
   }
+}
 </script>
 
 <style>
