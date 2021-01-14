@@ -62,11 +62,14 @@ export default {
       }
     },
     handleBeforeUpload(file) {
-      this.loading = true;
       if (this.beforeUpload) {
-        return this.beforeUpload(file);
+        return this.beforeUpload(file, this.loading);
       } else {
-        return checkImg(file, this.config.size || this.size, this.type);
+        let valid = checkImg(file, this.config.size || this.size, this.type);
+        if (valid) {
+          this.loading = true;
+        }
+        return valid;
       }
     }
   },

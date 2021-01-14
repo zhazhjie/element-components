@@ -1,6 +1,6 @@
 {
   "name": "element-components",
-  "version": "1.0.38",
+  "version": "1.0.39",
   "main": "./src/components/index.js",
   "scripts": {
     "serve": "vue-cli-service serve",
