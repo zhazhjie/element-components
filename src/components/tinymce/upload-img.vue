@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :visible="visible" @update:visible="handleVisible" title="上传图片">
+  <el-dialog :visible="visible" @update:visible="handleVisible" title="上传图片" append-to-body>
     <upload-box
       ref="uploadBox"
       list-type="picture-card"
