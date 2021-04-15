@@ -43,6 +43,7 @@
       handleSubmit() {
         this.handleVisible(false);
         this.$emit("selectImg", this.fileList);
+        this.fileList = [];
         this.$refs.uploadBox.$refs.upload.clearFiles();
       }
     },
