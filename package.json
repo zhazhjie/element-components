@@ -5,9 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build-components": "vue-cli-service build --target lib --name ElCompontents ./src/components/index.js --dest dist-compoents",
-    "build-table-template": "vue-cli-service build --target lib --name TableTemplate src/components/table-template/export.js --dest dist-table",
-    "build-tinymce": "vue-cli-service build --target lib --name Tinymce ./src/components/tinymce/export.js --dest dist-tinymce"
+    "build-components": "vue-cli-service build --target lib --name ElCompontents ./src/components/index.js --dest dist-compoents"
   },
   "dependencies": {
     "core-js": "^2.6.5",

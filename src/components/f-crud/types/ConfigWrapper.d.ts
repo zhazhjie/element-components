@@ -9,7 +9,14 @@ export class ConfigWrapper {
   /**
    *
    * @param config {Config}
-   * @returns {*}
+   * @returns {Config}
    */
   constructor(config: Config);
+
+  /**
+   * 获取配置项
+   * @param config {Config}
+   * @returns {Config}
+   */
+  static export(config: Config): Config;
 }

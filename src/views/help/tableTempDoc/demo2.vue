@@ -60,8 +60,11 @@ export default {
           city: "2333"
         }
       ],
-      config: new ConfigWrapper({
-        // mode: "drawer",
+      config: ConfigWrapper.export({
+        mode: "drawer",
+        // props: {
+        //   size: "mini"
+        // },
         selectable: true,
         dialog: {
           props: {width: '500px'},
@@ -81,7 +84,8 @@ export default {
           {
             label: 'ID',
             field: 'id',
-            props: {},
+            component: "",
+            attrs: {},
             dialog: {
               hide: true,
             },
@@ -94,8 +98,13 @@ export default {
             field: 'username',
             editable: true,
             disabledInEdit: true,
-            type: "input",
-            search: {},
+            // type: "input",
+            attrs: {},
+            props: "",
+            search: {
+              attrs: {},
+              props: {}
+            },
             dialog: {
               span: 12
             },
@@ -171,9 +180,7 @@ export default {
             label: '查看',
             icon: 'el-icon-view',
             // props: {},
-            attrs: {
-
-            },
+            attrs: {},
             event: 'view',
           },
           {
@@ -228,7 +235,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.config2)
+    console.log(this.config.props)
   }
 }
 </script>
