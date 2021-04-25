@@ -13,6 +13,14 @@ export default [
     component: (resolve) => require(['@/views/help/tableTempDoc'], resolve),
   },
   {
+    path: '/help/demo2',
+    meta: {
+      icon: "icon-save",
+      name: '表格模版文档2.0'
+    },
+    component: (resolve) => require(['@/views/help/tableTempDoc/demo2'], resolve),
+  },
+  {
     path: '/help/richText',
     meta: {
       icon: "icon-align-left",

@@ -13,7 +13,7 @@ import Vue from "vue";
  * @returns {boolean}
  */
 export function checkImg(file, size = 5, type = "jpeg|jpg|png") {
-  let limitType = new RegExp(`^image\\/(${type})$`,"ig").test(file.type);
+  let limitType = new RegExp(`^image\\/(${type})$`, "ig").test(file.type);
   let limitSize = file.size / 1024 / 1024 < size;
   if (!limitType) {
     Vue.prototype.$message.error(`图片只能是 ${type} 格式!`);
@@ -28,4 +28,64 @@ export function checkImg(file, size = 5, type = "jpeg|jpg|png") {
     return false;
   }
   return true;
+}
+
+/**
+ * 获取值类型 [object ?]
+ * @param value
+ * @returns {string}
+ */
+export function toString(value) {
+  return Object.prototype.toString.call(value);
+}
+
+/**
+ * 简单拷贝
+ * @param obj
+ * @returns {*}
+ */
+export function copy(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
+/**
+ * 横杠转驼峰
+ * @param name
+ * @param capitalize
+ * @returns {string}
+ */
+export function toCamelBak(name, capitalize) {
+  if (!name) return "";
+  let ary = name.split("-");
+  return ary.map((v, i) => {
+    if (i || capitalize) {
+      return v.substring(0, 1).toUpperCase() + v.substring(1);
+    } else {
+      return v;
+    }
+  }).join("");
+}
+
+/**
+ * 首字母大写
+ * @param name
+ * @returns {string}
+ */
+export function toCapitalize(name) {
+  if (!name) return "";
+  return name.substring(0, 1).toUpperCase() + name.substring(1);
+}
+
+/**
+ * 获取options项的值
+ * @param item
+ * @param key
+ * @returns {*}
+ */
+export function getItemVal(item, key) {
+  if (toString(item) === "[object Object]") {
+    return item[key];
+  } else {
+    return item;
+  }
 }

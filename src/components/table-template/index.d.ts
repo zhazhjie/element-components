@@ -1,4 +1,4 @@
-interface $table {
+interface TableTemplate {
   /**
    * 当前行
    */
@@ -54,4 +54,11 @@ interface $table {
   resetForm(): void;
 }
 
-declare const $table: $table;
+declare module 'vue/types/vue' {
+  interface Vue {
+    /**
+     * 注入TableTemplate实例
+     */
+    $table: TableTemplate
+  }
+}

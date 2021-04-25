@@ -9,6 +9,14 @@ import Tinymce from './tinymce';
 import UploadBox from './upload-box';
 import PermissionBtn from './permission-btn';
 import ImgClip from './img-clip';
+import Crud from './f-crud';
+import AddBtn from './f-crud/module/add-btn';
+import Btn from './f-crud/module/btn';
+import Dialog from './f-crud/module/dialog';
+import Form from './f-crud/module/form';
+import Page from './f-crud/module/page';
+import Search from './f-crud/module/search';
+import Table from './f-crud/module/table';
 
 const plugin = Object.create(null);
 plugin.install = function (Vue, options) {
@@ -22,5 +30,13 @@ plugin.install = function (Vue, options) {
   Vue.component(UploadBox.name, UploadBox);
   Vue.component(PermissionBtn.name, PermissionBtn);
   Vue.component(ImgClip.name, ImgClip);
+  Vue.component(Crud.name, Crud);
+  Vue.component(AddBtn.name, AddBtn);
+  Vue.component(Btn.name, Btn);
+  Vue.component(Dialog.name, Dialog);
+  Vue.component(Form.name, Form);
+  Vue.component(Page.name, Page);
+  Vue.component(Search.name, Search);
+  Vue.component(Table.name, Table);
 };
 export default plugin;
