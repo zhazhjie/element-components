@@ -60,7 +60,8 @@ export default {
      */
     createFormItem(column) {
       let scope = this.scopeName ? (column[this.scopeName] || {}) : column;
-      let {props = {}, attrs = {}, extend, hide} = scope;
+      let {extend, hide, formItem = {}} = scope;
+      let {props = {}, attrs = {}} = formItem;
       if (!column || hide) {
         return null;
       } else {

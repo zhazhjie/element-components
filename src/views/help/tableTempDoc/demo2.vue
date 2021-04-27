@@ -1,6 +1,6 @@
 <template>
   <section>
-    <f-wrapper
+    <f-crud-adapter
       :data="userList"
       :config="config"
       :tableLoading="tableLoading"
@@ -10,16 +10,19 @@
       @pageChange="handlePageChange"
       :page="params">
       <f-search></f-search>
+      <f-add-btn></f-add-btn>
+      <f-table></f-table>
       <f-table></f-table>
       <f-dialog></f-dialog>
-    </f-wrapper>
+      <f-page></f-page>
+    </f-crud-adapter>
   </section>
 </template>
 
 <script>
 import FTable from "@/components/f-crud/module/table";
 import FCrud from "@/components/f-crud";
-import FWrapper from "@/components/f-crud/adapter";
+import FCrudAdapter from "@/components/f-crud/adapter";
 import FDialog from "@/components/f-crud/module/dialog";
 import FSearch from "@/components/f-crud/module/search";
 import FPage from "@/components/f-crud/module/page";
@@ -33,7 +36,7 @@ export default {
     FPage,
     FSearch,
     FDialog,
-    FWrapper,
+    FCrudAdapter,
     FCrud,
     FTable
   },
@@ -60,17 +63,28 @@ export default {
           city: "2333"
         }
       ],
-      config: ConfigWrapper.export({
+      config: ConfigWrapper.convert({
         mode: "drawer",
         // props: {
         //   size: "mini"
         // },
         selectable: true,
         dialog: {
-          props: {width: '500px'},
+          on:{
+            beforeClose(done){
+
+            }
+          },
+          props: {
+            width: '500px',
+            title: ""
+          },
           group: [{title: "基本信息", columnIndexList: [1, 2, 4]}, {title: "附加信息", columnIndexList: [3]}],
         },
         handler: {
+          attrs:{
+
+          },
           props: {width: '170px'}
         },
         table: {
@@ -86,8 +100,14 @@ export default {
             field: 'id',
             component: "",
             attrs: {},
+            props: {
+
+            },
             dialog: {
               hide: true,
+              props: {
+                size: "123"
+              }
             },
             search: {
               hide: true,
@@ -119,7 +139,6 @@ export default {
           {
             label: '手机号',
             field: 'phone',
-            hideInSearch: true,
             attrs: {
               style: "color:red"
             },
@@ -134,7 +153,6 @@ export default {
             type: 'tag',
             value: 1,
             options: [{value: 1, text: "正常"}, {value: 0, text: "禁用"}],
-            filterable: true,
             props: {
               // columnKey: "state",
               // filters: [{value: 1, text: "正常"}, {value: 0, text: "禁用"}],
@@ -179,8 +197,12 @@ export default {
           {
             label: '查看',
             icon: 'el-icon-view',
-            // props: {},
-            attrs: {},
+            props: {},
+            attrs: {
+              id: "",
+              className: "",
+              style: "width:100px"
+            },
             event: 'view',
           },
           {

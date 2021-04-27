@@ -18,5 +18,5 @@ export class ConfigWrapper {
    * @param config {Config}
    * @returns {Config}
    */
-  static export(config: Config): Config;
+  static convert(config: Config): Config;
 }
