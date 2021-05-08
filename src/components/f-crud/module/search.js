@@ -94,7 +94,7 @@ export default {
       <div class="search-bar-wrapper">
         <f-form
           ref="searchBar"
-          scopeName="search"
+          scopeName="$search"
           inline={true}
           validFlag={false}
           config={this.config}

@@ -43,7 +43,7 @@ export default {
      * @return {*}
      */
     createDialogFooter() {
-      let {mode = "dialog"} = this.config;
+      let {mode = "dialog"} = this.config.$dialog || {};
       let isDialog = mode === "dialog";
       let isView = this.event === "view";
       return (
@@ -105,9 +105,8 @@ export default {
     },
   },
   render(h) {
-    let {mode = "dialog"} = this.config;
-    let {props = {}, attrs = {}, on = {}, footer = {}} = this.config.dialog || {};
-    let footerColumn = {field: "dialogFooter", render: footer.render};
+    let {mode = "dialog", props = {}, attrs = {}, on = {}, $footer = {}} = this.config.$dialog || {};
+    let footerColumn = {field: "dialogFooter", render: $footer.render};
     return h(
       'el-' + mode,
       {
@@ -128,7 +127,7 @@ export default {
         // domProps,
       },
       [
-        <f-form ref="form" scopeName="dialog" disabeld={this.loading} event={this.event} config={this.config}
+        <f-form ref="form" scopeName="$dialog" disabeld={this.loading} event={this.event} config={this.config}
                 data={this.data}/>,
         this.renderEl(footerColumn, footerColumn, this.data, "", this.createDialogFooter)
       ]

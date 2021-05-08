@@ -52,16 +52,16 @@ export default {
   },
   render() {
     let {current, size, total, sizes} = this.pageProp;
+    let {$page} = this.config;
     return (
       <el-pagination
-        style='margin:20px 0;text-align:right'
+        {...$page}
         on-size-change={this.handleSizeChange}
         on-current-change={this.handleCurrentChange}
         current-page={+this.page[current]}
         page-sizes={this.page[sizes]}
         page-size={+this.page[size]}
-        total={+this.page[total]}
-        layout="total, sizes, prev, pager, next, jumper"/>
+        total={+this.page[total]}/>
     )
   }
 }

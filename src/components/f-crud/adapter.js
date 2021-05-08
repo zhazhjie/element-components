@@ -4,8 +4,8 @@
  * @date 2021-04-22
  */
 import mixin from "./mixins/mixin";
-import "../table-template/style.css";
 import adapterMixin from "./mixins/adapter-mixin";
+import "./style.css";
 
 export default {
   name: "f-crud-adapter",
@@ -45,6 +45,6 @@ export default {
       slot.componentOptions.propsData = this.$attrs;
       slot.componentOptions.listeners = this.$listeners;
     });
-    return (<section class="table-template">{defaultSlots}</section>)
+    return (<section class="f-crud">{defaultSlots}</section>)
   }
 }

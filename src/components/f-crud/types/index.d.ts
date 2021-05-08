@@ -3,22 +3,24 @@ import {ElTable} from "element-ui/types/table";
 import {ElTableColumn} from "element-ui/types/table-column";
 import {ElDialog} from "element-ui/types/dialog";
 import {ElForm} from "element-ui/types/form";
+import {ElPagination} from "element-ui/types/pagination";
 import {Component, FunctionalComponentOptions} from "vue";
 import {ElementUIComponent} from "element-ui/types/component";
 
 /**
  * 配置项，详见文档 [戳这里](http://static.tigoyun.com/doc/element/index.html)
+ * 泛型R：数据列对象类型
  */
-export interface Config {
+export interface Config<R> {
   /**
    * @see Column
    * 列属性
    */
-  columns: Array<Column>;
+  columns: Array<Column<R>>;
   /**
    * 表格操作栏菜单
    */
-  handlerList?: Array<HandlerItem>;
+  handlerList?: Array<HandlerItem<R>>;
   /**
    * 表单验证规则，详见[戳这里](https://element.eleme.cn/#/zh-CN/component/form)
    */
@@ -26,27 +28,27 @@ export interface Config {
   /**
    * 表格作用域，用于定义[props/attrs]等属性
    */
-  table?: BasicScope<ElTable>;
+  $table?: BasicScope<ElTable>;
   /**
-   * 表格作用域，用于定义[props/attrs]等属性
+   * 弹出层作用域，用于定义[props/attrs]等属性
    */
-  dialog?: DialogScope<ElDialog>;
+  $dialog?: DialogScope<ElDialog>;
   /**
    * 搜索栏作用域，用于定义[props/attrs]等属性
    */
-  search?: SearchScope<ElementUIComponent>;
+  $search?: SearchScope<ElementUIComponent>;
   /**
    * 表格操作作用域，用于定义[props/attrs]等属性
    */
-  handler?: BasicScope<ElTableColumn>;
+  $handler?: BasicScope<ElTableColumn>;
+  /**
+   * 表格操作作用域，用于定义[props/attrs]等属性
+   */
+  $page?: BasicScope<ElPagination>;
   /**
    * 表格勾选栏作用域，用于定义[props/attrs]等属性
    */
-  selection?: BasicScope<ElTableColumn>;
-  /**
-   * 弹出层类型
-   */
-  mode?: "dialog" | "drawer";
+  $selection?: BasicScope<ElTableColumn>;
   /**
    * 是否显示新增按钮
    */
@@ -80,21 +82,24 @@ export interface Config {
    * @param row
    * @param done
    */
-  beforeOpen?: (row: object, done: () => void) => void;
+  beforeOpen?: (row: R, done: () => void) => void;
   /**
    * 关闭弹出层前触发，操作完成后调用done关闭弹出层
    * @param row
    * @param done
    */
-  beforeClose?: (row: object, done: () => void) => void;
+  beforeClose?: (row: R, done: () => void) => void;
 
   [T: string]: any;
 }
 
+/**
+ * 基础作用域
+ */
 interface BasicScope<T extends ElementUIComponent> {
   /**
    * 组件属性
-   * 具体类型视作用域而定
+   * 具体配置项视类型而定
    */
   props?: T;
   /**
@@ -112,47 +117,35 @@ interface BasicScope<T extends ElementUIComponent> {
  */
 interface DialogScope<T extends ElementUIComponent> extends BasicScope<T> {
   /**
+   * 弹出层类型
+   */
+  mode?: "dialog" | "drawer";
+  /**
    * 表单分组
    */
-  group: Array<Group>;
+  group?: Array<Group>;
   /**
-   * 表单作用域
+   * 弹出层表单作用域
    */
-  form: BasicScope<ElForm>;
+  $form?: BasicScope<ElForm>;
   /**
    * 弹出层操作栏作用域
    */
-  footer: BasicScope<ElementUIComponent>;
+  $footer?: BasicScope<ElementUIComponent>;
 }
 
 /**
- * 弹出层
+ * 搜索栏
  */
 interface SearchScope<T extends ElementUIComponent> extends BasicScope<T> {
   /**
    * 表单分组
    */
-  group: Array<Group>;
+  group?: Array<Group>;
   /**
-   * 表单作用域
+   * 探索栏表单作用域
    */
-  form: BasicScope<ElForm>;
-}
-
-/**
- * 表单项
- */
-interface FormItemScope<T extends ElementUIComponent> extends BasicScope<T> {
-  /**
-   * 行占比，默认值24占一行
-   */
-  span: number;
-  /**
-   *
-   * 附加到表单项末尾的内容
-   * @param row
-   */
-  append: (row: object) => any;
+  $form?: BasicScope<ElForm>;
 }
 
 /**
@@ -172,7 +165,7 @@ interface Group {
 /**
  * 作用域
  */
-export interface Scope<T extends ElementUIComponent> extends BasicScope<T> {
+export interface Scope<T extends ElementUIComponent, R> extends BasicScope<T> {
   /**
    * 类型，支持所有element-ui组件，不需要加"el-"前缀，如"select"
    */
@@ -186,21 +179,47 @@ export interface Scope<T extends ElementUIComponent> extends BasicScope<T> {
    * @param row 当前行
    * @param disabled 禁用标识
    */
-  render?: (row: object, disabled?: boolean) => Component;
+  render?: (row: R, disabled?: boolean) => Component;
   /**
-   * 默认值，仅对表单项有效
+   * 默认值
    */
-  value: any;
+  value?: any;
   /**
    * 是否在该作用域隐藏
    */
-  hide: boolean;
+  hide?: boolean;
+}
+
+/**
+ * 表单项作用域
+ */
+interface FormItemScope<T extends ElementUIComponent, R> extends BasicScope<T> {
+  /**
+   * 行占比，默认值24占一行
+   */
+  span?: number;
+  /**
+   *
+   * 附加到表单项末尾的内容
+   * @param row
+   */
+  append?: (row: R) => any;
+}
+
+/**
+ * 表单组件作用域
+ */
+export interface FormElScope<T extends ElementUIComponent, R> extends Scope<T, R> {
+  /**
+   * 表单项
+   */
+  $formItem?: FormItemScope<T, R>;
 }
 
 /**
  * 列属性
  */
-export interface Column extends Scope<ElTableColumn> {
+export interface Column<R> extends Scope<ElTableColumn, R> {
   /**
    * 字段名，必填
    */
@@ -213,63 +232,67 @@ export interface Column extends Scope<ElTableColumn> {
    * 选项列表，type为select/checkbox/radio/cascader/tag时可用
    * 同步代码可以使用Array<any>，异步获取的必须用()=>Array<any>
    */
-  options: Array<any> | (() => Array<any>);
+  options?: Array<any> | (() => Array<any>);
   /**
    * 格式化表格列，接收当前字段值作为参数
    * @param value
    */
-  format: (value: any) => any;
+  format?: (value: any) => any;
   /**
    * tag类型映射，配合{@link options}使用，如：{0:'danger',1:'success'}
    */
-  tagMapping: object;
+  tagMapping?: object;
 
   /**
    * {@link options}选项的默认字段
    */
-  defaultProp: DefaultProp;
+  defaultProp?: DefaultProp;
   /**
    * 对应搜索栏中的同字段表单项
    */
-  search?: Scope<ElementUIComponent>;
+  $search?: FormElScope<ElementUIComponent, R>;
   /**
    * 对应弹出层中的同字段表单项
    */
-  dialog?: Scope<ElementUIComponent>;
+  $dialog?: FormElScope<ElementUIComponent, R>;
   /**
    * 表头作用域
    */
-  header?: Scope<ElementUIComponent>;
+  $header?: BasicScope<ElementUIComponent>;
+  /**
+   * 表单组件
+   */
+  $formEl?: Scope<ElementUIComponent, R>;
   /**
    * 是否在新增时禁用
    */
-  disabledInAdd: boolean;
+  disabledInAdd?: boolean;
   /**
    * 是否在编辑时禁用
    */
-  disabledInEdit: boolean;
+  disabledInEdit?: boolean;
   /**
    * 是否在查看时禁用
    */
-  disabledInView: boolean;
+  disabledInView?: boolean;
   /**
-   * 表格字段是否可编辑，值显示方式必须为默认(不能设置type)
-   * 编辑栏失去焦点时调用{@link submit}方法
+   * 表格字段可编辑，值显示方式必须为默认(即不能设置type|component|render)
+   * 编辑栏失去焦点时触发{@link submit}方法
    */
-  editable: boolean;
+  editable?: boolean;
   /**
    * 可编辑表格字段失去聚焦时的回调
    * @param value 当前值
    * @param row 当前行
    * @param done submit执行完时需手动调用
    */
-  submit: (value: any, row: object, done: () => void) => void;
+  submit?: (value: any, row: R, done: () => void) => void;
 }
 
 /**
  * 表格操作栏项
  */
-interface HandlerItem {
+interface HandlerItem<R> {
   /**
    * 按钮名称
    */
@@ -295,12 +318,12 @@ interface HandlerItem {
    * @param row 当前行
    * @param disabled 禁用标识
    */
-  render?: (row: object, disabled?: boolean) => Component;
+  render?: (row: R, disabled?: boolean) => Component;
   /**
    * 自定义响应点击事件，将会覆盖event参数
    * @param row
    */
-  click?: (row: object) => void;
+  click?: (row: R) => void;
   /**
    * 权限标识
    */
@@ -356,5 +379,5 @@ interface Page {
    * 可选的分页数据条数
    * 默认"[10,20,50,100]"
    */
-  sizes: Array<number>;
+  sizes?: Array<number>;
 }

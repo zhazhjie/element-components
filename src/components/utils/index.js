@@ -89,3 +89,12 @@ export function getItemVal(item, key) {
     return item;
   }
 }
+
+/**
+ *
+ * @param val
+ * @returns {boolean}
+ */
+export function isEmpty(val) {
+  return val === "" || val === null || val === undefined;
+}

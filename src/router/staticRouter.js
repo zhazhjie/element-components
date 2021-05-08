@@ -13,12 +13,12 @@ export default [
     component: (resolve) => require(['@/views/help/tableTempDoc'], resolve),
   },
   {
-    path: '/help/demo2',
+    path: '/help/crudDoc',
     meta: {
       icon: "icon-save",
       name: '表格模版文档2.0'
     },
-    component: (resolve) => require(['@/views/help/tableTempDoc/demo2'], resolve),
+    component: (resolve) => require(['@/views/help/crudDoc'], resolve),
   },
   {
     path: '/help/richText',

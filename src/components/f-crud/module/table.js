@@ -5,6 +5,7 @@
  */
 import mixin from "../mixins/mixin";
 import FBtn from "./btn";
+import {isEmpty} from "@/components/utils";
 
 export default {
   name: "f-table",
@@ -102,13 +103,13 @@ export default {
   render() {
     let {
       columns,
-      table,
+      handlerList,
       selectable,
       expandable,
-      selection,
-      handlerList,
-      handler,
       showIndex,
+      $selection,
+      $handler,
+      $table,
     } = this.config;
     let {tableTop, tableLeft, tableRight, tableBottom, expand, handlerList: handlerListSlots} = this.$scopedSlots;
     return (
@@ -124,7 +125,7 @@ export default {
             border
             v-loading={this.loading}
             data={this.data}
-            {...table}
+            {...$table}
           >
             {/*表格勾选框*/}
             {selectable &&
@@ -132,7 +133,7 @@ export default {
               type="selection"
               align="center"
               width="50"
-              {...selection}/>}
+              {...$selection}/>}
             {/*表格索引栏*/}
             {showIndex &&
             <el-table-column
@@ -153,7 +154,7 @@ export default {
                 if (column.hide) {
                   return null;
                 } else {
-                  let {label, field, props = {}, attrs, editable, type, component, format, header = {}} = column;
+                  let {label, field, props = {}, attrs, editable, type, component, format, header = {}, $formEl = {}, value = ""} = column;
                   return (
                     <el-table-column
                       align="center"
@@ -163,7 +164,7 @@ export default {
                       scopedSlots={{
                         default: scope => {
                           let {$index, row} = scope;
-                          return this.renderEl(column, column, row, "", !type && !component ? () => {
+                          return this.renderEl(column, $formEl, row, "", !type && !component ? () => {
                             let fieldVal = row[field];
                             let fieldKey = field + $index;
                             let curField = this.fieldMap[fieldKey];
@@ -189,7 +190,7 @@ export default {
                               )
                             } else {
                               return (
-                                <span attrs={attrs}>{format ? format(fieldVal) : fieldVal}</span>
+                                <span attrs={attrs}>{format ? format(fieldVal) : (isEmpty(fieldVal) ? value : fieldVal)}</span>
                               )
                             }
                           } : null);
@@ -217,7 +218,7 @@ export default {
                 label="操作"
                 fixed="right"
                 header-align="center"
-                {...handler}
+                {...$handler}
                 scopedSlots={{
                   default: scope => {
                     if (handlerList.length) {

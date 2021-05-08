@@ -19,7 +19,7 @@ export default {
     /**
      * 同一渲染入口
      * @param column {Column} 列
-     * @param scope {Column} 作用域
+     * @param scope {Scope} 作用域
      * @param row {Object} 行
      * @param suffix {String} 字段后缀
      * @param customRender {Function} 自定义渲染函数
@@ -46,7 +46,7 @@ export default {
     /**
      * 创建组件
      * @param column {Column} 列
-     * @param scope {Column} 作用域
+     * @param scope {Scope} 作用域
      * @param row {Object} 行
      * @param suffix {String} 字段后缀
      * @param disabled {Boolean} 组件是否禁用
@@ -55,11 +55,11 @@ export default {
     createEl(column = {}, scope = {}, row = {}, suffix, disabled = false) {
       let createElement = this.$createElement;
       let {options = [], defaultProp = {value: "value", text: "text"}, field, label} = column;
-      let {type = "input", component, props = {}, attrs = {}, on = {}, domProps, nativeOn, directives, scopedSlots} = scope;
+      let {type = "input", component = "", props = {}, attrs = {}, on = {}, domProps, nativeOn, directives, scopedSlots} = scope;
       let data = {props, attrs, on};
       // 当options异步获取时，用()=>([])
       if (toString(options) === "[object Function]") options = options();
-      switch (type) {
+      switch (type + component) {
         case "checkbox":
           return (
             <el-checkbox-group

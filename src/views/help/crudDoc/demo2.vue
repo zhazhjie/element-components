@@ -29,6 +29,22 @@ import FPage from "@/components/f-crud/module/page";
 import FAddBtn from "@/components/f-crud/module/add-btn";
 import {ConfigWrapper} from "@/components/f-crud/types/ConfigWrapper";
 
+export class User {
+  /**
+   * ID
+   * @type {number}
+   */
+  id;
+  /**
+   * 用户名
+   */
+  username;
+  /**
+   * 年龄
+   */
+  age;
+}
+
 export default {
   name: "demo",
   components: {
@@ -64,14 +80,14 @@ export default {
         }
       ],
       config: ConfigWrapper.convert({
-        mode: "drawer",
-        // props: {
-        //   size: "mini"
-        // },
+        beforeOpen: (row, done) => {
+          console.log(row.age)
+        },
         selectable: true,
-        dialog: {
-          on:{
-            beforeClose(done){
+        $dialog: {
+          mode: "drawer",
+          on: {
+            beforeClose(done) {
 
             }
           },
@@ -81,13 +97,11 @@ export default {
           },
           group: [{title: "基本信息", columnIndexList: [1, 2, 4]}, {title: "附加信息", columnIndexList: [3]}],
         },
-        handler: {
-          attrs:{
-
-          },
-          props: {width: '170px'}
+        $handler: {
+          attrs: {},
+          props: {width: '180px'}
         },
-        table: {
+        $table: {
           on: {
             "select-all": (row) => {
               console.log(row)
@@ -100,16 +114,14 @@ export default {
             field: 'id',
             component: "",
             attrs: {},
-            props: {
-
-            },
-            dialog: {
+            props: {},
+            $dialog: {
               hide: true,
               props: {
                 size: "123"
               }
             },
-            search: {
+            $search: {
               hide: true,
             }
           },
@@ -121,11 +133,11 @@ export default {
             // type: "input",
             attrs: {},
             props: "",
-            search: {
+            $search: {
               attrs: {},
               props: {}
             },
-            dialog: {
+            $dialog: {
               span: 12
             },
             submit: (val, row, done) => {
@@ -143,7 +155,7 @@ export default {
               style: "color:red"
             },
             format: val => val.substring(0, 3) + "****" + val.substring(7),
-            dialog: {
+            $dialog: {
               span: 12
             },
           },
@@ -167,7 +179,7 @@ export default {
             // render: (row) => {
             //   return row.state ? <el-tag type="success">正常</el-tag> : <el-tag type="danger">禁用</el-tag>
             // },
-            dialog: {
+            $dialog: {
               type: "radio",
               props: {
                 border: true
@@ -178,7 +190,7 @@ export default {
                 }
               }
             },
-            search: {
+            $search: {
               type: "select",
               props: {
                 clearable: true
@@ -201,7 +213,6 @@ export default {
             attrs: {
               id: "",
               className: "",
-              style: "width:100px"
             },
             event: 'view',
           },
@@ -222,7 +233,7 @@ export default {
             {required: true, message: '请输入登录账号', trigger: 'blur'}
           ],
         },
-      }),
+      }, new User()),
       params: {
         currentPage: 1,
         pageSize: 10,

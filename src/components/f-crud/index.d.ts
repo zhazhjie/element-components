@@ -3,15 +3,10 @@
  * @author zzhijie
  * @date 2021-04-22
  */
-import {Config} from "./types";
 import {ElTable} from "element-ui/types/table";
 
 interface CRUD {
   name: "f-crud";
-  /**
-   * 配置项
-   */
-  config: Config;
   /**
    * 当前行
    */

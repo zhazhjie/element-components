@@ -60,8 +60,8 @@ export default {
      */
     createFormItem(column) {
       let scope = this.scopeName ? (column[this.scopeName] || {}) : column;
-      let {extend, hide, formItem = {}} = scope;
-      let {props = {}, attrs = {}} = formItem;
+      let {extend, hide, $formItem = {}} = scope;
+      let {props = {}, attrs = {}} = $formItem;
       if (!column || hide) {
         return null;
       } else {
@@ -82,7 +82,8 @@ export default {
   render() {
     let {columns = [], rules = {}} = this.config;
     let scope = this.scopeName ? (this.config[this.scopeName] || {}) : this.config;
-    let {props = {}, attrs = {}, group = []} = scope;
+    let {$form = {}, group = []} = scope;
+    let {props = {}, attrs = {}} = $form;
     let columnList = group.length ? group : columns;
     return (
       <el-form

@@ -9,9 +9,9 @@ import FDialog from "./module/dialog";
 import FPage from "./module/page";
 import FBtn from "./module/btn";
 import FAddBtn from "./module/add-btn";
-import "../table-template/style.css";
 import mixin from "./mixins/mixin";
 import adapterMixin from "./mixins/adapter-mixin";
+import "./style.css";
 
 export default {
   name: "f-crud",
@@ -62,7 +62,7 @@ export default {
   render() {
     let {searchable = true, pageable = true, addable = true} = this.config;
     return (
-      <section class="table-template">
+      <section class="f-crud">
         {searchable &&
         <f-search
           config={this.config}
