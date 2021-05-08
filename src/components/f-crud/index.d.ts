@@ -4,6 +4,7 @@
  * @date 2021-04-22
  */
 import {ElTable} from "element-ui/types/table";
+import {ConfigWrapper} from "./types/ConfigWrapper";
 
 interface CRUD {
   name: "f-crud";
@@ -41,6 +42,7 @@ declare module 'vue/types/vue' {
      * 注入$crud对象
      */
     $crud: CRUD
+    ConfigWrapper: ConfigWrapper<any>
   }
 }
 

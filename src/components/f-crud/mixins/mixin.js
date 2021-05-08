@@ -3,7 +3,7 @@
  * @author zzhijie
  * @date 2021-04-23
  */
-import {getItemVal, toString, toCamelBak, toCapitalize} from "@/components/utils";
+import {getItemVal, toString, toCamelBak, toCapitalize} from "../../../components/utils";
 
 export default {
   methods: {

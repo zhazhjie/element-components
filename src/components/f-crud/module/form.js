@@ -3,7 +3,7 @@
  * @author zzhijie
  * @date 2021-02-07
  */
-import {toCapitalize} from "@/components/utils";
+import {toCapitalize} from "../../../components/utils";
 import mixin from "../mixins/mixin";
 
 export default {

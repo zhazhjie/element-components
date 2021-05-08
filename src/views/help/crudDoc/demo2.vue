@@ -79,7 +79,7 @@ export default {
           city: "2333"
         }
       ],
-      config: ConfigWrapper.convert({
+      config: this.ConfigWrapper.convert({
         beforeOpen: (row, done) => {
           console.log(row.age)
         },

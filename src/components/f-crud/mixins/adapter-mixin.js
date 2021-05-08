@@ -1,4 +1,4 @@
-import {copy} from "@/components/utils";
+import {copy} from "../../../components/utils";
 
 /**
  *

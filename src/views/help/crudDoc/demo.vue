@@ -1,6 +1,6 @@
 <template>
   <section>
-    <table-template
+    <f-crud
       ref="table"
       :data="userList"
       :config="config"
@@ -34,13 +34,15 @@
           width="120">
         </el-table-column>
       </template>
-    </table-template>
+    </f-crud>
   </section>
 </template>
 
 <script>
+import FCrud from "@/components/f-crud";
 export default {
   name: "demo",
+  components: {FCrud},
   data() {
     return {
       tableLoading: false,

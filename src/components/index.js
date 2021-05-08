@@ -17,12 +17,14 @@ import Form from './f-crud/module/form';
 import Page from './f-crud/module/page';
 import Search from './f-crud/module/search';
 import Table from './f-crud/module/table';
+import {ConfigWrapper} from "./f-crud/types/ConfigWrapper";
 
 const plugin = Object.create(null);
 plugin.install = function (Vue, options) {
   if (options) {
     for (let key in options) {
-      Vue.prototype["$" + key] = options[key];
+      if (options.hasOwnProperty(key))
+        Vue.prototype["$" + key] = options[key];
     }
   }
   Vue.component(TableTemplate.name, TableTemplate);
@@ -38,5 +40,6 @@ plugin.install = function (Vue, options) {
   Vue.component(Page.name, Page);
   Vue.component(Search.name, Search);
   Vue.component(Table.name, Table);
+  Vue.prototype.ConfigWrapper = ConfigWrapper;
 };
 export default plugin;

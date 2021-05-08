@@ -5,7 +5,7 @@
  */
 import mixin from "../mixins/mixin";
 import FBtn from "./btn";
-import {isEmpty} from "@/components/utils";
+import {isEmpty} from "../../../components/utils";
 
 export default {
   name: "f-table",
