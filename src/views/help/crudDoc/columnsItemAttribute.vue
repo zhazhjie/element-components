@@ -33,9 +33,16 @@
           },
           {
             param: "type",
-            explain: "表格列字段的组件类型",
+            explain: "表格列字段的组件类型，不需要加\"el-\"前缀，如\"select\"",
             type: "string",
-            optionalValue: "所有element组件",
+            optionalValue: "-",
+            defaultValue: "-"
+          },
+          {
+            param: "component",
+            explain: "表格列字段的组件类型，支持全局组件，优先值高于type，如\"el-select\"",
+            type: "string",
+            optionalValue: "-",
             defaultValue: "-"
           },
           {

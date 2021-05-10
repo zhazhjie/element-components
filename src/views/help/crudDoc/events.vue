@@ -63,11 +63,11 @@
             explain: "点击搜索时触发",
             cb: "Function(params)，参数说明：[搜索条件参数]",
           },
-          {
-            event: "resetSearch",
-            explain: "重置搜索条件时触发",
-            cb: "Function()",
-          },
+          // {
+          //   event: "resetSearch",
+          //   explain: "重置搜索条件时触发",
+          //   cb: "Function()",
+          // },
           {
             event: "pageChange",
             explain: "点击分页时触发",

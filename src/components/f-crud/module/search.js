@@ -39,7 +39,7 @@ export default {
      */
     handleReset() {
       this.resetSearchForm();
-      this.emitEvent("reset-search", this.data);
+      this.handleSearch();
     },
     /**
      * 重置搜索栏字段

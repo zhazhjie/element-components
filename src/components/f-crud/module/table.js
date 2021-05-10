@@ -164,7 +164,7 @@ export default {
                       scopedSlots={{
                         default: scope => {
                           let {$index, row} = scope;
-                          return this.renderEl(column, $formEl, row, "", !type && !component ? () => {
+                          return this.renderEl(column, column, row, "", !type && !component ? () => {
                             let fieldVal = row[field];
                             let fieldKey = field + $index;
                             let curField = this.fieldMap[fieldKey];

@@ -80,8 +80,8 @@ export default {
       vNode.event = event;
       vNode.title = title;
       let {columns, beforeOpen} = vNode.config;
+      let initValue = {};
       if (event === "add") {
-        let initValue = {};
         columns.forEach(column => {
           initValue[column.field] = column.value;
         });
@@ -93,7 +93,7 @@ export default {
         vNode.visible = true;
       };
       if (beforeOpen) {
-        beforeOpen(row, done);
+        beforeOpen(row || initValue, done);
       } else {
         done();
       }

@@ -260,10 +260,6 @@ export interface Column<R> extends Scope<ElTableColumn, R> {
    */
   $header?: BasicScope<ElementUIComponent>;
   /**
-   * 表单组件
-   */
-  $formEl?: Scope<ElementUIComponent, R>;
-  /**
    * 是否在新增时禁用
    */
   disabledInAdd?: boolean;

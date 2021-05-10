@@ -1,9 +1,8 @@
 <template>
   <section class="table-temp-doc">
     <p class="tips">tips:</p>
-    <p class="tips">模版内表单类型理论上支持全部element表单组件及其props</p>
     <p class="tips">模版内的方法尽量使用箭头函数，避免this指向错误</p>
-    <p class="tips">显示值的优先级：render(渲染函数) > slot(插槽) > default(默认)</p>
+    <p class="tips">显示值的优先级：render(渲染函数)> slot(插槽)> component(全局组件)> type/default(默认)</p>
     <el-collapse>
       <el-collapse-item title="示例代码" name="1">
         <demo></demo>
