@@ -88,7 +88,6 @@ export default {
         $dialog: {
           props: {
             width: '500px',
-            title: ""
           },
           group: [{title: "基本信息", columnIndexList: [1, 2, 4]}, {title: "附加信息", columnIndexList: [3]}],
         },
@@ -149,7 +148,6 @@ export default {
             label: '状态',
             field: 'state',
             type: 'tag',
-            value: 1,
             options: [{value: 1, text: "正常"}, {value: 0, text: "禁用"}],
             props: {
               // columnKey: "state",
@@ -171,7 +169,8 @@ export default {
                 change: val => {
                   this.$message.info("状态值变为：" + val);
                 }
-              }
+              },
+              value: 1,
             },
             $search: {
               type: "select",

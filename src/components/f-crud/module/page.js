@@ -19,7 +19,7 @@ export default {
   },
   data() {
     return {
-      globalConfig: this.$tableConfig || {},  // 全局注入的配置
+      globalConfig: this.$crudConfig || {},  // 全局注入的配置
     }
   },
   computed: {
@@ -61,7 +61,8 @@ export default {
         current-page={+this.page[current]}
         page-sizes={this.page[sizes]}
         page-size={+this.page[size]}
-        total={+this.page[total]}/>
+        total={+this.page[total]}
+        layout="total, sizes, prev, pager, next, jumper"/>
     )
   }
 }

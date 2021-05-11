@@ -8,7 +8,7 @@ import TableTemplate from './index';
 
 const plugin = Object.create(null);
 plugin.install = function (Vue, options) {
-  Vue.prototype.$tableConfig = options;
+  Vue.prototype.$crudConfig = options;
   Vue.component(TableTemplate.name, TableTemplate);
 };
 export default plugin;

@@ -18,7 +18,6 @@ export default {
     },
     handleClick() {
       let crud = this.getCrud(this.$parent);
-      console.log(crud)
       if (crud) {
         crud.handleCustomEvent({event: "add"});
       }

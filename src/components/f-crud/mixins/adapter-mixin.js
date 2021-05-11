@@ -83,7 +83,8 @@ export default {
       let initValue = {};
       if (event === "add") {
         columns.forEach(column => {
-          initValue[column.field] = column.value;
+          let {$dialog = {}} = column;
+          initValue[column.field] = $dialog.value;
         });
         vNode[rowName] = initValue;
       } else {

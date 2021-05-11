@@ -52,12 +52,12 @@
   flex: 1;
 }
 
-.search-bar-wrapper .el-form-item {
+.search-bar-form.el-form .el-form-item {
   display: inline-flex;
   width: 250px;
 }
 
-.search-bar-wrapper .search-opt {
+.search-bar-form.el-form .search-opt {
   display: inline-block;
   width: auto;
   margin-left: 10px;
@@ -79,7 +79,7 @@
   margin: 0 auto 15px;
 }
 
-.search-bar-wrapper .el-form {
+.search-bar-form.el-form {
   background-color: #f9f9f9;
   padding: 18px 0 0;
   border: 1px solid #ebeef5;
@@ -87,7 +87,7 @@
   overflow: hidden;
 }
 
-.search-bar-wrapper .slide-down {
+.search-bar-form.slide-down {
   height: 300px;
   transition: all 0.2s;
 }

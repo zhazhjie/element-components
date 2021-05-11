@@ -171,7 +171,7 @@ export interface Scope<T extends ElementUIComponent, R> extends BasicScope<T> {
    */
   type?: string;
   /**
-   * 自定义组件，支持所有element-ui组件以及自定义的全局组件，优先值高于type，如"el-select"
+   * 自定义组件，需全局注册，优先值高于type，默认绑定v-model
    */
   component?: string | Component;
   /**
