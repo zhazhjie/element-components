@@ -1,16 +1,18 @@
 <template>
   <section>
     <h3>Group Attribute</h3>
-    <table-template
+    <f-crud
       :data="groupList"
       :config="config">
-    </table-template>
+    </f-crud>
   </section>
 </template>
 
 <script>
+  import FCrud from "@/components/f-crud";
   export default {
     name: "group-attribute",
+    components: {FCrud},
     props:{
       config:Object,
     },

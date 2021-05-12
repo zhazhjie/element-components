@@ -1,10 +1,10 @@
 <template>
   <section>
     <h3>Attribute</h3>
-    <table-template
+    <f-crud
       :data="dataList"
       :config="config">
-    </table-template>
+    </f-crud>
   </section>
 </template>
 

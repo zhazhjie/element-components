@@ -3,17 +3,19 @@
     <h3>Slots</h3>
     <p class="tips">插槽用于扩展模版无法满足需求时提供自定义内容</p>
     <p class="tips">如：{{slotText}}</p>
-    <table-template
+    <f-crud
       ref="table"
       :data="slotList"
       :config="config">
-    </table-template>
+    </f-crud>
   </section>
 </template>
 
 <script>
+  import FCrud from "@/components/f-crud";
   export default {
     name: "table-slots",
+    components: {FCrud},
     data() {
       return {
         slotText: `<template v-slot:add><el-button>自定义按钮</el-button></template>`,
@@ -22,8 +24,10 @@
           searchable: false,
           pageable: false,
           addable: false,
-          tableProps: {
-            border: false,
+          $table: {
+            props:{
+              border: false,
+            }
           },
           columns: [
             {

@@ -52,12 +52,12 @@
   flex: 1;
 }
 
-.search-bar-wrapper .el-form-item {
+.f-crud .search-bar-wrapper .el-form-item {
   display: inline-flex;
   width: 250px;
 }
 
-.search-bar-wrapper .search-opt {
+.f-crud .search-bar-wrapper .search-opt {
   display: inline-block;
   width: auto;
   margin-left: 10px;

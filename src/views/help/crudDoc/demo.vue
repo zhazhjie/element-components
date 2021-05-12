@@ -8,55 +8,17 @@
       @submitEdit="handleSubmitEdit"
       @submitSearch="handleSubmitSearch"
       @pageChange="handlePageChange"
-      :page="params">
-<!--      <f-search></f-search>-->
-<!--      <f-add-btn></f-add-btn>-->
-<!--      <f-table></f-table>-->
-<!--      <f-table></f-table>-->
-<!--      <f-dialog></f-dialog>-->
-<!--      <f-page></f-page>-->
-    </f-crud>
+      :page="params"/>
   </section>
 </template>
 
 <script>
-import FTable from "@/components/f-crud/module/table";
-import FCrud from "@/components/f-crud";
-import FCrudAdapter from "@/components/f-crud/adapter";
-import FDialog from "@/components/f-crud/module/dialog";
-import FSearch from "@/components/f-crud/module/search";
-import FPage from "@/components/f-crud/module/page";
-import FAddBtn from "@/components/f-crud/module/add-btn";
-import {ConfigWrapper} from "@/components/f-crud/types/ConfigWrapper";
-
-export class User {
-  /**
-   * ID
-   * @type {number}
-   */
-  id;
-  /**
-   * 用户名
-   */
-  username;
-  /**
-   * 年龄
-   */
-  age;
-}
+import {User} from "@/views/help/crudDoc/User";
 
 export default {
   name: "demo",
-  components: {
-    FAddBtn,
-    FPage,
-    FSearch,
-    FDialog,
-    FCrudAdapter,
-    FCrud,
-    FTable
-  },
   data() {
+    let options = [{value: 1, text: "正常"}, {value: 0, text: "禁用"}];
     return {
       tableLoading: false,
       userList: [
@@ -148,13 +110,13 @@ export default {
             label: '状态',
             field: 'state',
             type: 'tag',
-            options: [{value: 1, text: "正常"}, {value: 0, text: "禁用"}],
+            options: options,
             props: {
-              // columnKey: "state",
-              // filters: [{value: 1, text: "正常"}, {value: 0, text: "禁用"}],
-              // filterMethod: (value,row,column) => {
-              //   return row.state===value;
-              // }
+              columnKey: "state",
+              filters: options,
+              filterMethod: (value, row, column) => {
+                return row.state === value;
+              }
             },
             tagMapping: {
               0: "danger",
@@ -242,7 +204,6 @@ export default {
       done();
     },
     handleSubmitSearch(params) {
-      console.log(params);
       this.$message.success("提交搜索");
     },
     handlePageChange() {
@@ -250,7 +211,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.config.props)
+
   }
 }
 </script>

@@ -86,12 +86,10 @@ export default {
     this.setVisibleNum();
   },
   render() {
-    let {collapsible, columns} = this.config;
-    let searchScope = this.config.search || this.config;
-    let {showReset = true} = searchScope;
+    let {collapsible, columns, showReset = true, attrs = {}} = this.config;
     let searchColumns = columns.filter(v => !(v.search && v.search.hide));
     return (
-      <div class="search-bar-wrapper">
+      <div class="search-bar-wrapper" attrs={attrs}>
         <f-form
           ref="searchBar"
           scopeName="$search"

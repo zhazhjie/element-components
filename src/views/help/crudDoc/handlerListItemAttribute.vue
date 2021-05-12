@@ -1,16 +1,18 @@
 <template>
   <section>
     <h3>HandlerList Item Attribute</h3>
-    <table-template
+    <f-crud
       :data="handlerList"
       :config="config">
-    </table-template>
+    </f-crud>
   </section>
 </template>
 
 <script>
+  import FCrud from "@/components/f-crud";
   export default {
     name: "handler-list-item-attribute",
+    components: {FCrud},
     props:{
       config:Object,
     },
@@ -49,8 +51,8 @@
             param: "event",
             explain: "触发默认事件",
             type: "string",
-            optionalValue: "showAdd/showEdit/showView",
-            defaultValue: "showEdit"
+            optionalValue: "add/edit/view",
+            defaultValue: "edit"
           },
           {
             param: "render",

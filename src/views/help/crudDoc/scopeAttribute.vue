@@ -1,17 +1,19 @@
 <template>
   <section>
-    <h3>FormItem Attribute</h3>
-    <table-template
+    <h3>Scope Attribute</h3>
+    <f-crud
       ref="table"
       :data="formItemList"
       :config="config">
-    </table-template>
+    </f-crud>
   </section>
 </template>
 
 <script>
+  import FCrud from "@/components/f-crud";
   export default {
-    name: "form-item-attribute",
+    name: "scope-attribute",
+    components: {FCrud},
     props:{
       config:Object,
     },
@@ -19,30 +21,23 @@
       return {
         formItemList: [
           {
-            param: "span",
-            explain: "行占比，默认值24占一行",
-            type: "number",
-            optionalValue: "1-24",
-            defaultValue: "24"
-          },
-          {
             param: "props",
-            explain: "表单组件属性，支持el-form-item的所有属性",
+            explain: "组件属性，视具体组件类型而定",
             type: "object",
             optionalValue: "-",
             defaultValue: "-"
           },
           {
             param: "attrs",
-            explain: "原生元素属性，如style",
+            explain: "原生元素属性，如style/id/className",
             type: "object",
             optionalValue: "-",
             defaultValue: "-"
           },
           {
-            param: "append",
-            explain: "弹出层表单项后置内容，接收row作为参数",
-            type: "function",
+            param: "on",
+            explain: "组件事件，只支持-写法，如active-change",
+            type: "object",
             optionalValue: "-",
             defaultValue: "-"
           },

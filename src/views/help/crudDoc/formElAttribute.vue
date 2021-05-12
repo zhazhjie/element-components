@@ -1,17 +1,19 @@
 <template>
   <section>
-    <h3>FormEl Attribute</h3>
-    <table-template
+    <h3>FormElScope Attribute</h3>
+    <f-crud
       ref="table"
       :data="formElList"
       :config="config">
-    </table-template>
+    </f-crud>
   </section>
 </template>
 
 <script>
+  import FCrud from "@/components/f-crud";
   export default {
     name: "form-el-attribute",
+    components: {FCrud},
     props:{
       config:Object,
     },
@@ -20,10 +22,17 @@
         formElList: [
           {
             param: "type",
-            explain: "弹出层表单组件类型，如：'select'，支持element所有表单元素",
+            explain: "表单字段的组件类型，不需要加\"el-\"前缀，如\"select\"",
             type: "string",
             optionalValue: "-",
-            defaultValue: "input"
+            defaultValue: "-"
+          },
+          {
+            param: "component",
+            explain: "表单字段的组件类型，支持全局组件，优先值高于type，如\"el-select\"",
+            type: "string",
+            optionalValue: "-",
+            defaultValue: "-"
           },
           {
             param: "render",
@@ -54,9 +63,16 @@
             defaultValue: "-"
           },
           {
-            param: "change",
-            explain: "表单元素值改变时调用，需要this对象请用箭头函数，接收两个参数Function(value,row)，参数说明：[当前值，当前行]",
+            param: "extend",
+            explain: "扩展组件，Function(component,row)，参数说明：[当前表单组件，当前行]",
             type: "function",
+            optionalValue: "-",
+            defaultValue: "-"
+          },
+          {
+            param: "$formItem",
+            explain: "表单项作用域，对应el-form-item组件，详见FormItemScope Attribute",
+            type: "object",
             optionalValue: "-",
             defaultValue: "-"
           },

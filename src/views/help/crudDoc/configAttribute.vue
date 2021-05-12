@@ -1,16 +1,18 @@
 <template>
   <section>
     <h3>Config Attribute</h3>
-    <table-template
+    <f-crud
       :data="configList"
       :config="config">
-    </table-template>
+    </f-crud>
   </section>
 </template>
 
 <script>
+  import FCrud from "@/components/f-crud";
   export default {
     name: "config-attribute",
+    components: {FCrud},
     props:{
       config:Object,
     },
@@ -40,42 +42,42 @@
           },
           {
             param: "$table",
-            explain: "表格作用域，对应el-table组件",
+            explain: "表格作用域，对应el-table组件，详见Scope Attribute",
             type: "object",
             optionalValue: "-",
             defaultValue: "-"
           },
           {
             param: "$handler",
-            explain: "操作列作用域，对应el-table-column组件",
+            explain: "操作列作用域，对应el-table-column组件，详见Scope Attribute",
             type: "object",
             optionalValue: "-",
             defaultValue: "-"
           },
           {
             param: "$dialog",
-            explain: "弹出层作用域，对应el-dialog或el-drawer组件",
+            explain: "弹出层作用域，对应el-dialog或el-drawer组件，详见DialogScope Attribute",
             type: "object",
             optionalValue: "-",
             defaultValue: "-"
           },
           {
             param: "$search",
-            explain: "搜索栏作用域，对应div元素",
+            explain: "搜索栏作用域，对应div元素，详见SearchScope Attribute",
             type: "object",
             optionalValue: "-",
             defaultValue: "-"
           },
           {
             param: "$selection",
-            explain: "表格勾选栏属性，如selectable，是否可勾选function(row)",
+            explain: "表格勾选栏作用域，对应el-table-column,type=selection，详见Scope Attribute",
             type: "object",
             optionalValue: "-",
             defaultValue: "-"
           },
           {
             param: "$page",
-            explain: "表格勾选栏属性，如selectable，是否可勾选function(row)",
+            explain: "分页作用域，对应el-pagination组件，详见Scope Attribute",
             type: "object",
             optionalValue: "-",
             defaultValue: "-"

@@ -102,8 +102,8 @@ export default {
   },
   render() {
     let {
-      columns,
-      handlerList,
+      columns = [],
+      handlerList = [],
       selectable,
       expandable,
       showIndex,
@@ -190,7 +190,8 @@ export default {
                               )
                             } else {
                               return (
-                                <span attrs={attrs}>{format ? format(fieldVal) : (isEmpty(fieldVal) ? value : fieldVal)}</span>
+                                <span
+                                  attrs={attrs}>{format ? format(fieldVal) : (isEmpty(fieldVal) ? value : fieldVal)}</span>
                               )
                             }
                           } : null);

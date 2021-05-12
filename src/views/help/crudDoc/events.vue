@@ -1,26 +1,29 @@
 <template>
   <section>
     <h3>Events</h3>
-    <p class="tips">事件监听会在对应的操作时触发，如：&lt;table-template @submitAdd='handleSubmitAdd' /&gt;</p>
-    <table-template
+    <p class="tips">事件监听会在对应的操作时触发，如：&lt;f-crud @submitAdd='handleSubmitAdd' /&gt;</p>
+    <f-crud
       :data="eventList"
       :config="config">
-    </table-template>
+    </f-crud>
   </section>
 </template>
 
 <script>
+  import FCrud from "@/components/f-crud";
   export default {
     name: "events",
+    components: {FCrud},
     data() {
       return {
         config: {
-          withoutDialog: true,
           searchable: false,
           pageable: false,
           addable: false,
-          tableProps: {
-            border: false,
+          $table: {
+            props:{
+              border: false,
+            }
           },
           columns: [
             {

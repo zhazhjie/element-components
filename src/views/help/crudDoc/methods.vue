@@ -1,17 +1,19 @@
 <template>
   <section>
     <h3>Methods</h3>
-    <p class="tips">模版暴露出来的方法，可手动调用，如：this.$table.showAdd()，自动注入$table实例</p>
-    <table-template
+    <p class="tips">模版暴露出来的方法，可手动调用，如：this.$crud.showColumns([1,2])，自动注入$crud实例</p>
+    <f-crud
       :data="methodList"
       :config="config">
-    </table-template>
+    </f-crud>
   </section>
 </template>
 
 <script>
+  import FCrud from "@/components/f-crud";
   export default {
     name: "methods",
+    components: {FCrud},
     data() {
       return {
         config: {
@@ -19,8 +21,10 @@
           searchable: false,
           pageable: false,
           addable: false,
-          tableProps: {
-            border: false,
+          $table: {
+            props:{
+              border: false,
+            }
           },
           columns: [
             {

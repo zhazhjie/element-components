@@ -1,16 +1,18 @@
 <template>
   <section>
     <h3>Columns Item Attribute</h3>
-    <table-template
+    <f-crud
       :data="columnsItemList"
       :config="config">
-    </table-template>
+    </f-crud>
   </section>
 </template>
 
 <script>
+  import FCrud from "@/components/f-crud";
   export default {
     name: "columns-item-attribute",
+    components: {FCrud},
     props:{
       config:Object,
     },
@@ -152,21 +154,21 @@
           },
           {
             param: "$header",
-            explain: "自定义表头，接收当前行row作为参数，优先级最高，必须使用箭头函数，支持jsx语法",
+            explain: "自定义表头作用域，详见Scope Attribute",
             type: "function",
             optionalValue: "-",
             defaultValue: "-"
           },
           {
             param: "$dialog",
-            explain: "弹出层表单组件属性，详情FormEl Attribute",
+            explain: "弹出层表单组件属性，详情FormElScope Attribute",
             type: "object",
             optionalValue: "-",
             defaultValue: "-"
           },
           {
             param: "$search",
-            explain: "搜索栏表单组件属性，同formEl",
+            explain: "搜索栏表单组件属性，详见FormElScope Attribute",
             type: "object",
             optionalValue: "-",
             defaultValue: "-"
