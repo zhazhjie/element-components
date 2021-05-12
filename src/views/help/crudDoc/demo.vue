@@ -14,9 +14,11 @@
 
 <script>
 import {User} from "@/views/help/crudDoc/User";
+import FCrud from "@/components/f-crud";
 
 export default {
   name: "demo",
+  components: {FCrud},
   data() {
     let options = [{value: 1, text: "正常"}, {value: 0, text: "禁用"}];
     return {
